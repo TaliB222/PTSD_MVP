@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אפיון מסכים וממשק משתמש - מודול הורה מתמודד</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar for spec panels */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-height-screen p-6 lg:p-12">
+
+    <!-- Header Section -->
+    <header class="max-w-7xl mx-auto mb-8 text-right">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-6">
+            <div>
+                <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-3 py-1 rounded-full">שלב ה-MVP וארכיטקטורה</span>
+                <h1 class="text-3xl lg:text-4xl font-bold text-slate-800 mt-2">אפיון ממשק משתמש ומסכים (UI Spec)</h1>
+                <p class="text-slate-600 mt-1">מודול הורה מתמודד (PTSD) - זרימת התמרה מטראומה לסיפור מתווך</p>
+            </div>
+            <div class="text-sm text-slate-500">
+                <p><strong>מנהלת מוצר:</strong> מנהלת מוצר בריאות דיגיטלית</p>
+                <p><strong>גרסה:</strong> 1.0 (אינטראקטיבית)</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Sidebar Navigation & Spec Switcher (3 Columns on Big Screens) -->
+        <section class="lg:col-span-3 flex flex-col gap-4">
+            <h2 class="text-lg font-bold text-slate-700 mb-1">תפריט מסכי המודול</h2>
+            
+            <button onclick="switchScreen(1)" id="btn-screen1" class="screen-nav-btn active flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-teal-500 bg-teal-50 text-teal-900 font-bold shadow-sm">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך פריקה וויסות</p>
+                        <p class="text-xs text-slate-500 font-normal">הזנת טריגר / אירוע מותאמת</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-teal-600"></i>
+            </button>
+
+            <button onclick="switchScreen(2)" id="btn-screen2" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">2</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך תיקוף רגשי (AI)</p>
+                        <p class="text-xs text-slate-500 font-normal">הורדת אשמה וויסות הורה</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <button onclick="switchScreen(3)" id="btn-screen3" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">3</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך שער הורים מאובטח</p>
+                        <p class="text-xs text-slate-500 font-normal">Parental Gate להגנת התוכן</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <button onclick="switchScreen(4)" id="btn-screen4" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">4</span>
+                    <div>
+                        <p class="text-sm font-bold">בקרת סיפור וכרטיסיות</p>
+                        <p class="text-xs text-slate-500 font-normal">Coaching להקראה ומנטליזציה</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <div class="mt-6 bg-slate-800 text-white p-4 rounded-xl text-sm">
+                <p class="font-bold mb-2 flex items-center gap-2 text-teal-400">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    טיפ בדיקה אינטראקטיבי:
+                </p>
+                <p class="text-slate-300 text-xs">תוכלי להשתמש בממשק הסימולטור מימין כדי ללחוץ על הכפתורים הפיזיים של הטלפון ולעבור בין המסכים בדיוק כמו המשתמש הקצה.</p>
+            </div>
+        </section>
+
+        <!-- Simulated Mobile Phone Interface (4 Columns) -->
+        <section class="lg:col-span-4 flex justify-center items-center">
+            <div class="relative w-[360px] h-[720px] bg-slate-900 rounded-[50px] p-4 shadow-2xl border-4 border-slate-700">
+                <!-- Phone Ear Speaker & Camera Notch -->
+                <div class="absolute top-4 left-1/2 transform -translate-x-1/2 h-5 w-32 bg-slate-900 rounded-b-2xl z-40 flex justify-center items-start">
+                    <div class="w-12 h-1 bg-slate-700 rounded-full mt-1"></div>
+                </div>
+
+                <!-- Phone Internal Screen (Simulated Area) -->
+                <div class="w-full h-full bg-stone-50 rounded-[38px] overflow-hidden relative flex flex-col pt-6 select-none">
+                    
+                    <!-- Simulated App Top Bar -->
+                    <div class="bg-stone-50 px-4 py-2 flex justify-between items-center text-xs text-slate-500 border-b border-stone-200 z-10">
+                        <span class="font-semibold text-right">MentaCare App</span>
+                        <div class="flex items-center gap-1.5 direction-ltr">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-three-quarters text-xs"></i>
+                            <span class="font-bold ml-1">11:05</span>
+                        </div>
+                    </div>
+
+                    <!-- SCREEN CONTAINER: DYNAMIC CONTENT AREA -->
+                    <div class="flex-grow overflow-y-auto custom-scrollbar p-5 pb-8 relative" id="mobile-viewport">
+                        
+                        <!-- SIMULATED SCREEN 1: DECOMPRESS / INTAKE -->
+                        <div id="sim-screen1" class="sim-screen block">
+                            <div class="text-right">
+                                <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md">צעד 1 מתוך 3</span>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2">מה קרה היום?</h3>
+                                <p class="text-slate-500 text-xs mt-1">כאן המקום לפרוק באופן חופשי ומאובטח. אנחנו כאן ללא שיפוטיות.</p>
+                            </div>
+
+                            <!-- Fast Tag Pills Matrix -->
+                            <div class="mt-5 text-right">
+                                <label class="text-xs font-bold text-slate-500 block mb-2">בחירה מהירה (Fast Tags):</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-volume-high text-amber-500"></i>
+                                        צעקתי או איבדתי סבלנות
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-cloud-bolt text-blue-500"></i>
+                                        נבהלתי מרעש פתאומי
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-door-closed text-slate-500"></i>
+                                        הסתגרתי בחדר וניצלתי
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-eye text-red-500"></i>
+                                        הייתי דרוך ומתוח מאוד
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Voice Recording Block -->
+                            <div class="mt-6 p-4 bg-teal-50/50 border border-teal-100 rounded-2xl text-center flex flex-col items-center">
+                                <p class="text-xs font-bold text-slate-600 mb-3">או לפרוק בהקלטה קולית ללא מאמץ:</p>
+                                
+                                <!-- Pulsing Record Button -->
+                                <button id="record-btn" onclick="toggleRecording()" class="w-16 h-16 rounded-full bg-teal-600 hover:bg-teal-700 text-white flex items-center justify-center shadow-lg hover:shadow-teal-100 transition duration-300 relative">
+                                    <i class="fa-solid fa-microphone text-xl" id="mic-icon"></i>
+                                    <!-- Dynamic Wave Pulse Ring when recording -->
+                                    <span id="pulse-ring" class="absolute inset-0 rounded-full bg-teal-600 opacity-30 animate-ping hidden"></span>
+                                </button>
+                                
+                                <p class="text-[11px] text-slate-500 mt-2.5" id="record-status">לחץ כדי להתחיל להקליט חופשי</p>
+                            </div>
+
+                            <!-- Optional Free Text Area -->
+                            <div class="mt-4 text-right">
+                                <label class="text-xs font-bold text-slate-500 block mb-1">הוספת פרטים בטקסט (אופציונלי):</label>
+                                <textarea id="free-text-input" placeholder="לדוגמה: כשהתפוצץ הבלון בגינה צעקתי על הילד, הוא נבהל..." class="w-full text-xs p-3 border border-stone-200 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none bg-white text-slate-800 text-right h-16 resize-none"></textarea>
+                            </div>
+
+                            <!-- Submission Flow Button -->
+                            <button onclick="submitIntake()" class="mt-5 w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-bold text-sm transition duration-150 flex items-center justify-center gap-2 shadow-sm">
+                                שלח וקבל תיקוף והכנה לסיפור
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
+                            </button>
+                        </div>
+
+                        <!-- SIMULATED SCREEN 2: VALIDATION / REDUCING GUILT -->
+                        <div id="sim-screen2" class="sim-screen hidden">
+                            <div class="text-right">
+                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">צעד 2 מתוך 3</span>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2">אנחנו איתך בזה.</h3>
+                                <p class="text-slate-500 text-xs mt-1">לפני שנתקדם לילד, רגע אחד של חמלה עבורך.</p>
+                            </div>
+
+                            <!-- Empathic Validation Box -->
+                            <div class="mt-5 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-right">
+                                <div class="flex items-center gap-2 text-emerald-800 mb-2">
+                                    <i class="fa-solid fa-shield-heart text-lg"></i>
+                                    <h4 class="font-bold text-sm">אתה הורה נהדר שמתמודד</h4>
+                                </div>
+                                <p class="text-xs leading-relaxed text-slate-700">
+                                    התגובה הדרמטית שהתרחשה היום היא סימפטום מוכר של פוסט-טראומה, ולא כשל הורות או חוסר אכפתיות. 
+                                    עצם העובדה שאתה מדווח ומבקש לתווך את זה לילד שלך מראה על חוסן הורי יוצא דופן.
+                                </p>
+                            </div>
+
+                            <!-- Breathing/De-escalation Micro-Interaction -->
+                            <div class="mt-5 p-4 bg-stone-100 rounded-2xl text-center">
+                                <p class="text-xs font-semibold text-slate-600 mb-2">קח נשימה עמוקה לפני שנתחיל (מומלץ):</p>
+                                <div class="w-12 h-12 rounded-full border-4 border-emerald-300 border-t-emerald-600 animate-spin mx-auto my-2" style="animation-duration: 3s;"></div>
+                                <p class="text-[11px] text-slate-500">שאיפה... נשיפה... הירגעות</p>
+                            </div>
+
+                            <!-- System Status / AI Generation Loader -->
+                            <div class="mt-5 pt-3 border-t border-stone-200">
+                                <div class="flex items-center justify-between text-xs text-slate-600 mb-2">
+                                    <span>המנוע מתאים את המטאפורות...</span>
+                                    <span class="font-bold">הסיפור מוכן ב-100%</span>
+                                </div>
+                                <div class="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full w-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Proceed to parental gate -->
+                            <button onclick="goToGate()" class="mt-6 w-full bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-bold text-sm transition duration-150 flex items-center justify-center gap-2">
+                                המשך לשער בקרת הורים מאובטח
+                                <i class="fa-solid fa-lock text-xs"></i>
+                            </button>
+                        </div>
+
+                        <!-- SIMULATED SCREEN 3: PARENTAL GATE (SECURITY) -->
+                        <div id="sim-screen3" class="sim-screen hidden">
+                            <div class="text-center mt-6">
+                                <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto text-2xl shadow-sm">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-4">שער בטיחות הורית</h3>
+                                <p class="text-slate-500 text-xs mt-1.5 px-4">
+                                    כדי להבטיח שהתוכן וההסבר לא ייחשפו לילד ללא התיווך שלך, אנא אמת את זהותך.
+                                </p>
+                            </div>
+
+                            <!-- Security Verification Form / Simulated Bio-auth -->
+                            <div class="mt-8 p-5 bg-white border border-stone-200 rounded-2xl shadow-sm text-center">
+                                <p class="text-xs font-semibold text-slate-600 mb-4">אימות ביומטרי או קוד אבטחה:</p>
+                                
+                                <!-- Simulated Face ID Button -->
+                                <button onclick="verifyAccess()" class="w-24 h-24 rounded-2xl bg-stone-50 border border-stone-200 hover:bg-teal-50 hover:border-teal-300 flex flex-col items-center justify-center gap-2 mx-auto transition duration-200">
+                                    <i class="fa-solid fa-face-id text-3xl text-teal-600 animate-pulse"></i>
+                                    <span class="text-[10px] text-slate-500 font-bold">השתמש ב-Face ID</span>
+                                </button>
+
+                                <div class="my-4 text-xs text-slate-400">או הזן קוד סודי:</div>
+
+                                <!-- Input PIN indicator -->
+                                <div class="flex justify-center gap-3">
+                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+                                </div>
+                            </div>
+
+                            <p class="text-[10px] text-slate-400 text-center mt-6">
+                                המידע הגולמי מוצפן ונמחק לאחר גזירת הסיפור מטעמי פרטיות מלאה.
+                              </p>
+                        </div>
+
+                        <!-- SIMULATED SCREEN 4: STORY REVIEW & PARENT COACHING -->
+                        <div id="sim-screen4" class="sim-screen hidden">
+                            <div class="text-right">
+                                <span class="text-xs font-semibold text-slate-600 bg-stone-100 px-2.5 py-1 rounded-md">צעד 3 מתוך 3</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">מסך הקראה והדרכה</h3>
+                                <p class="text-slate-500 text-xs mt-1">מצד ימין מוצג הסיפור לילד, ומצד שמאל כרטיסיות הדרכה בשבילך.</p>
+                            </div>
+
+                            <!-- Double Sided Preview Simulator Structure (Stacked for Mobile view) -->
+                            <div class="mt-4 border-2 border-dashed border-teal-300 rounded-xl p-3 bg-white">
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-teal-600 block mb-1">תצוגת הילד (סיפור מטאפורי):</span>
+                                <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-100 text-right">
+                                    <p class="text-xs font-bold text-slate-800">הסיפור של אבא דוב וסופת הלב 🐻💨</p>
+                                    <p class="text-[11px] leading-relaxed text-slate-600 mt-1">
+                                        "...ופתאום נשמע רעש חזק ביער. אבא דוב הרגיש סערה קטנה ועמוסה נכנסת לו אל תוך הלב. הוא היה צריך קצת שקט, אז הוא נכנס למערה שלו כדי להירגע ולשמור על כולם. דובון קטן ידע שזה לא בגללו..."
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Parent Coaching Card (The core Mentalization Tool) -->
+                            <div class="mt-4 bg-teal-600 text-white rounded-xl p-4 text-right shadow-sm relative overflow-hidden">
+                                <div class="absolute -right-6 -bottom-6 opacity-10 text-6xl">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <i class="fa-solid fa-user-graduate text-sm text-teal-200"></i>
+                                    <span class="text-xs font-bold text-teal-100">הנחיית עיבוד (Coaching Prompt):</span>
+                                </div>
+                                <h4 class="font-bold text-sm mb-1">עצור לרגע כאן, ושאל את הילד:</h4>
+                                <p class="text-xs text-teal-50">
+                                    "דובון קטן נבהל כשאבא נכנס למערה. גם אתה הרגשת היום קצת מבוהל או עצוב כשהייתי צריך ללכת לחדר?"
+                                </p>
+                            </div>
+
+                            <!-- Edit and Approve Action Buttons -->
+                            <div class="mt-5 grid grid-cols-2 gap-3">
+                                <button onclick="alert('נשלחה בקשה ל-AI לרכך את הסיפור ולהתאים אותו מחדש!')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    בקש ריכוך טון
+                                </button>
+                                <button onclick="finishStorySession()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1 shadow-sm">
+                                    אשר והתחל הקראה
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Specifications Tab Panels (5 Columns on Big Screens) -->
+        <section class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl shadow-sm p-6 lg:p-8 max-h-[720px] overflow-y-auto custom-scrollbar text-right">
+            
+            <!-- Dynamic Spec Title -->
+            <div id="spec-header" class="border-b border-stone-150 pb-4 mb-5">
+                <span class="text-xs font-bold text-teal-600 uppercase tracking-wide">תיעוד ממשק משתמש ופונקציונליות</span>
+                <h2 id="spec-title" class="text-2xl font-bold text-slate-800 mt-1">אפיון מסך 1: מסך פריקה וויסות (Safe Intake)</h2>
+            </div>
+
+            <!-- Spec Content Area -->
+            <div id="spec-body" class="space-y-6 text-sm text-slate-700">
+                
+                <!-- Section: Goal -->
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-bullseye text-teal-600"></i>
+                        מטרת המסך (Screen Goal)
+                    </h3>
+                    <p class="leading-relaxed">
+                        לאפשר להורה המוצף/טעון אשמה להזין אירוע או טריגר במינימום חיכוך קוגניטיבי. ההנחה הקלינית היא שההורה נמצא כרגע במצב של סטרס ולכן לא מסוגל להקלדות ממושכות, ניווט מורכב או ניתוחים אנליטיים.
+                    </p>
+                </div>
+
+                <!-- Section: UI Elements -->
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-list-check text-teal-600"></i>
+                        רכיבי ממשק מפתח (UI Elements)
+                    </h3>
+                    <ul class="list-disc pr-5 space-y-1.5">
+                        <li><strong>כותרת ראשית חמה (RTL Header):</strong> "מה קרה היום?" עם כותרת משנה מרגיעה ומאפשרת.</li>
+                        <li><strong>מטריצת תגיות מהירות (Fast Tags Matrix):</strong> כפתורים גדולים ונגישים המייצגים את אירועי הפוסט-טראומה הדומיננטיים (כעס, דריכות, הסתגרות, היבהלות). לחיצה אחת בוחרת ומזינה אותם.</li>
+                        <li><strong>כפתור הקלטה קולית מרכזי (Record Component):</strong> עיגול בולט ונושם. לחיצה מתחילה הקלטת אודיו (Voice to text). בעל חיווי ויזואלי של טבעת פועמת (Ping animation).</li>
+                        <li><strong>תיבת טקסט חופשי (Optional Text Area):</strong> עבור הורים שמעדיפים לפרט בכתב.</li>
+                    </ul>
+                </div>
+
+                <!-- Section: Clinical & Product Logic -->
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-stethoscope text-teal-600"></i>
+                        חוקיות קלינית ומוצרית (Spec & Rules)
+                    </h3>
+                    <ul class="list-disc pr-5 space-y-1.5">
+                        <li><strong>אבטחה ודיסקרטיות:</strong> המערכת פועלת במצב מאובטח לחלוטין. לא מתבצעת שמירה של קבצי הסאונד המקוריים של ההורה אלא המרה מיידית לטקסט מעובד (אנונימי) למנוע ה-AI.</li>
+                        <li><strong>הפחתת אשמה ראשונית:</strong> חוקיות הממשק לא מכריחה שום שדה חובה (למעט קלט אחד כלשהו - קול או כפתור). אין חיוויי שגיאה אגרסיביים ("שכחת להזין").</li>
+                        <li><strong>זיהוי קווים אדומים קליניים (Safety Interruption):</strong> אם המערכת מזהה מילים הקשורות לפגיעה עצמית, אלימות חמורה כלפי הילד או אובדנות, התהליך נעצר מיד ועובר למסך חסימה קליני (הפניה לקו נט"ל/ער"ן).</li>
+                    </ul>
+                </div>
+
+                <!-- Section: Edge Cases -->
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-triangle-exclamation text-teal-600"></i>
+                        מקרי קצה וטיפול בשגיאות (Edge Cases)
+                    </h3>
+                    <ul class="list-disc pr-5 space-y-1.5">
+                        <li><strong>שגיאת הרשאות מיקרופון:</strong> במידה וההורה חסם הרשאת מיקרופון, הכפתור יקבל מצב Disabled אפור, ויוצג באנר עדין בתחתית שמנחה להפעיל הרשאות עם קישור ישיר להגדרות המכשיר.</li>
+                        <li><strong>לחיצה בשוגג ללא קלט:</strong> במידה וההורה לחץ על "שלח" ללא הזנת קוד או הקלטה, המערכת לא תציג סימון שגיאה אדום אלא תפעיל בעדינות את מנגנון ה-Voice עם כרטיסיית הצעה: "לא בטוח מה להגיד? הקלט נשימה או לחץ על הכפתור שהכי קרוב למה שחווית".</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- UI Interaction and Spec Changing Script -->
+    <script>
+        // Screen specification DB for reactive updates
+        const specs = {
+            1: {
+                title: "אפיון מסך 1: מסך פריקה וויסות (Safe Intake)",
+                goal: "לאפשר להורה המוצף/טעון אשמה להזין אירוע או טריגר במינימום חיכוך קוגניטיבי. ההנחה הקלינית היא שההורה נמצא כרגע במצב של סטרס ולכן לא מסוגל להקלדות ממושכות, ניווט מורכב או ניתוחים אנליטיים.",
+                elements: [
+                    "<strong>כותרת ראשית חמה (RTL Header):</strong> \"מה קרה היום?\" עם כותרת משנה מרגיעה ומאפשרת.",
+                    "<strong>מטריצת תגיות מהירות (Fast Tags Matrix):</strong> כפתורים גדולים ונגישים המייצגים את אירועי הפוסט-טראומה הדומיננטיים (כעס, דריכות, הסתגרות, היבהלות). לחיצה אחת בוחרת ומזינה אותם.",
+                    "<strong>כפתור הקלטה קולית מרכזי (Record Component):</strong> עיגול בולט ונושם. לחיצה מתחילה הקלטת אודיו (Voice to text). בעל חיווי ויזואלי של טבעת פועמת (Ping animation).",
+                    "<strong>תיבת טקסט חופשי (Optional Text Area):</strong> עבור הורים שמעדיפים לפרט בכתב."
+                ],
+                rules: [
+                    "<strong>אבטחה ודיסקרטיות:</strong> המערכת פועלת במצב מאובטח לחלוטין. לא מתבצעת שמירה של קבצי הסאונד המקוריים של ההורה אלא המרה מיידית לטקסט מעובד (אנונימי) למנוע ה-AI.",
+                    "<strong>הפחתת אשמה ראשונית:</strong> חוקיות הממשק לא מכריחה שום שדה חובה (למעט קלט אחד כלשהו - קול או כפתור). אין חיוויי שגיאה אגרסיביים.",
+                    "<strong>זיהוי קווים אדומים קליניים (Safety Interruption):</strong> אם המערכת מזהה מילים הקשורות לפגיעה עצמית, אלימות חמורה כלפי הילד או אובדנות, התהליך נעצר מיד ועובר למסך חסימה קליני."
+                ],
+                edges: [
+                    "<strong>שגיאת הרשאות מיקרופון:</strong> במידה וההורה חסם הרשאת מיקרופון, הכפתור יקבל מצב Disabled אפור, ויוצג באנר עדין בתחתית שמנחה להפעיל הרשאות.",
+                    "<strong>לחיצה בשוגג ללא קלט:</strong> במידה וההורה לחץ על \"שלח\" ללא הזנת קוד או הקלטה, המערכת תציג כרטיסיית הצעה ידידותית."
+                ]
+            },
+            2: {
+                title: "אפיון מסך 2: מסך תיקוף רגשי מיידי להורה (Validation Step)",
+                goal: "להוריד את רמת האשמה, הבושה וההצפה הפיזיולוגית של ההורה מיד לאחר שביצע פריקה, על מנת להכין אותו מנטלית וקוגניטיבית למפגש התיווך והקריאה עם הילד.",
+                elements: [
+                    "<strong>כרטיסיית תיקוף רגשי קלינית (Validation Box):</strong> כרטיסיית טקסט חמה עם צבע רקע ירוק/מרגיע (Emerald 50), המדגישה כי האירוע הוא סימפטום קליני של הפציעה ולא כשל הורי.",
+                    "<strong>קומפוננטת תרגיל נשימה (Breathing Interaction):</strong> מעגל אנימציה מתרחב ומתכווץ המורה להורה לקחת נשימה עמוקה.",
+                    "<strong>סטטוס גנרציית סיפור (AI Status bar):</strong> חיווי קצב התקדמות יצירת הסיפור על ידי מנוע המטאפורה מאחורי הקלעים."
+                ],
+                rules: [
+                    "<strong>קריטיות פסיכו-חינוכית:</strong> שלב זה מחויב במעבר של כל הורה מתמודד כדי לא לאפשר כניסה לשיח עם הילד מתוך חרדה או כעס דומיננטיים.",
+                    "<strong>פרסונליזציה של התיקוף:</strong> ה-AI מנסח את הודעת התיקוף בהתאם לסוג הטריגר שהוזן (לדוגמה, התמודדות עם רעש תתוקף שונה מאשר התפרצות זעם)."
+                ],
+                edges: [
+                    "<strong>זמן גנרציה ממושך:</strong> אם ה-AI מתעכב ביצירת הסיפור, מסך הנשימה והוויסות יישאר פעיל ויוצגו טיפים קליניים להפחתת מתח בזמן אמת, מבלי לשדר תקלה או איבוד נתונים."
+                ]
+            },
+            3: {
+                title: "אפיון מסך 3: שער אבטחת הורים (Parental Gate)",
+                goal: "למנוע חשיפה ישירה של הסיפור, המטאפורה או הנתונים הגולמיים לילד לפני שההורה קרא אותם, אישר אותם ומוכן לתיווך פנים-אל-פנים.",
+                elements: [
+                    "<strong>סמל נעילה קליני מאובטח:</strong> הדגשת המרחב המוגן של ההורה.",
+                    "<strong>אינטגרציית ביומטריה (Simulated Face ID / Touch ID):</strong> כלי מהיר לפתיחה מאובטחת המונע מהילד פתיחה בשוגג של האזור ההורי.",
+                    "<strong>ממשק גיבוי PIN קוד:</strong> 4 נקודות ריקות להקלדת קוד גיבוי."
+                ],
+                rules: [
+                    "<strong>חסימה הרמטית:</strong> שום נתון קלט או פלט של ה-AI לא יוצג במכשיר לפני מעבר שער בטיחות ביומטרי/קוד.",
+                    "<strong>ניהול Session:</strong> נעילה אוטומטית של הממשק ברגע שהאפליקציה עוברת לרקע או לאחר 60 שניות של חוסר פעילות."
+                ],
+                edges: [
+                    "<strong>אי התאמה ביומטרית חוזרת:</strong> לאחר 3 כשלונות ביומטריים, המערכת תחזיר אוטומטית לממשק הקלדת PIN קוד ותשלח התראה באימייל הרשום."
+                ]
+            },
+            4: {
+                title: "אפיון מסך 4: מסך בקרת סיפור והדרכה (Story Review & Coaching)",
+                goal: "להעניק להורה את הסמכות, השליטה והמילים המדויקות (Coaching) לבצע מנטליזציה רפלקטיבית עם הילד בזמן אמת.",
+                elements: [
+                    "<strong>תצוגת הילד (Story Panel):</strong> הצגת הסיפור המטאפורי שגובש על ידי ה-AI (למשל: \"אבא דוב וסופת הלב\") בשפה פשוטה מותאמת לגיל.",
+                    "<strong>כרטיסיות הדרכה להורה (Coaching Cards Component):</strong> כרטיסיות צבעוניות המציגות הנחיות קליניות ברורות להורה: מתי לעצור, מתי להחזיק יד, ואיזו שאלה מתווכת לשאול.",
+                    "<strong>כפתור התאמת טון (Edit Theme Button):</strong> כלי המאפשר להורה לבקש ריכוך, פחות מלל, או שינוי של אלמנטים מסוימים בסיפור."
+                ],
+                rules: [
+                    "<strong>שחזור מנטליזציה אקטיבית:</strong> כרטיסיות ה-Coaching מחוברות ישירות לפרטי האירוע כדי לכוון את ההורה לשאול שאלות תיווך מותאמות.",
+                    "<strong>מגבלת מטאפורות קבועה:</strong> הסיפור לעולם אינו מכיל ביטויים צבאיים או אגרסיביים מדי, אלא משתמש בדימויים של טבע ובעלי חיים ליצירת מרחב בטוח לילד."
+                ],
+                edges: [
+                    "<strong>חוסר שיתוף פעולה מצד הילד:</strong> במידה והילד לא מעוניין להקשיב לסיפור, כרטיסיית ההדרכה מציעה חלופה מהירה: \"אם הילד חסר סבלנות, אפשר לעבור ישירות לעמוד הסיום שמדגיש את אהבת ההורה, ולהשאיר את השיח למחר\"."
+                ]
+            }
+        };
+
+        // Screen switching controller
+        function switchScreen(screenNum) {
+            // 1. Update Navigation Buttons Style
+            document.querySelectorAll('.screen-nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-teal-500', 'bg-teal-50', 'text-teal-900', 'font-bold', 'shadow-sm');
+                btn.classList.add('border-transparent', 'bg-white', 'text-slate-700', 'font-medium');
+                // reset icon styles
+                const icon = btn.querySelector('i');
+                icon.className = 'fa-solid fa-chevron-left text-slate-400';
+                
+                const badge = btn.querySelector('.w-8');
+                badge.className = 'w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm';
+            });
+
+            const activeBtn = document.getElementById(`btn-screen1`); // default fallback
+            const actualBtn = document.getElementById(`btn-screen${screenNum}`);
+            actualBtn.classList.remove('border-transparent', 'bg-white', 'text-slate-700', 'font-medium');
+            actualBtn.classList.add('active', 'border-teal-500', 'bg-teal-50', 'text-teal-900', 'font-bold', 'shadow-sm');
+            
+            const activeIcon = actualBtn.querySelector('i');
+            activeIcon.className = 'fa-solid fa-chevron-left text-teal-600';
+            
+            const activeBadge = actualBtn.querySelector('.w-8');
+            activeBadge.className = 'w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm';
+
+            // 2. Switch Simulated Phone Views
+            document.querySelectorAll('.sim-screen').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById(`sim-screen${screenNum}`).classList.remove('hidden');
+
+            // 3. Update Specifications Documentation Panel
+            const currentSpec = specs[screenNum];
+            document.getElementById('spec-title').innerText = currentSpec.title;
+            
+            // Build UI Elements Bullet list
+            let elementsHTML = `<ul class="list-disc pr-5 space-y-1.5">`;
+            currentSpec.elements.forEach(item => {
+                elementsHTML += `<li>${item}</li>`;
+            });
+            elementsHTML += `</ul>`;
+
+            // Build Rules Bullet list
+            let rulesHTML = `<ul class="list-disc pr-5 space-y-1.5">`;
+            currentSpec.rules.forEach(item => {
+                rulesHTML += `<li>${item}</li>`;
+            });
+            rulesHTML += `</ul>`;
+
+            // Build Edge Cases Bullet list
+            let edgesHTML = `<ul class="list-disc pr-5 space-y-1.5">`;
+            currentSpec.edges.forEach(item => {
+                edgesHTML += `<li>${item}</li>`;
+            });
+            edgesHTML += `</ul>`;
+
+            // Update entire body HTML
+            document.getElementById('spec-body').innerHTML = `
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-bullseye text-teal-600"></i>
+                        מטרת המסך (Screen Goal)
+                    </h3>
+                    <p class="leading-relaxed">${currentSpec.goal}</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-list-check text-teal-600"></i>
+                        רכיבי ממשק מפתח (UI Elements)
+                    </h3>
+                    ${elementsHTML}
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-stethoscope text-teal-600"></i>
+                        חוקיות קלינית ומוצרית (Spec & Rules)
+                    </h3>
+                    ${rulesHTML}
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-triangle-exclamation text-teal-600"></i>
+                        מקרי קצה וטיפול בשגיאות (Edge Cases)
+                    </h3>
+                    ${edgesHTML}
+                </div>
+            `;
+        }
+
+        // Voice Recording simulator toggle
+        let recordingState = false;
+        function toggleRecording() {
+            recordingState = !recordingState;
+            const status = document.getElementById('record-status');
+            const ring = document.getElementById('pulse-ring');
+            const mic = document.getElementById('mic-icon');
+            const btn = document.getElementById('record-btn');
+
+            if(recordingState) {
+                status.innerText = "מקליט כעת... לחץ שוב לסיום ההקלטה";
+                status.className = "text-[11px] text-red-500 font-bold animate-pulse mt-2.5";
+                ring.classList.remove('hidden');
+                mic.className = "fa-solid fa-stop text-xl";
+                btn.classList.add('bg-red-600');
+                btn.classList.remove('bg-teal-600');
+            } else {
+                status.innerText = "ההקלטה הושלמה והומרה לטקסט!";
+                status.className = "text-[11px] text-emerald-600 font-bold mt-2.5";
+                ring.classList.add('hidden');
+                mic.className = "fa-solid fa-microphone text-xl";
+                btn.classList.add('bg-teal-600');
+                btn.classList.remove('bg-red-600');
+                // Fill simulated text area
+                document.getElementById('free-text-input').value = "אבא שוב כעס וצעק בצהריים מול כולם, דובון קטן נבהל מאוד והלך להסתתר";
+            }
+        }
+
+        // Tag selection toggle logic
+        function toggleTag(btn) {
+            btn.classList.toggle('bg-stone-100');
+            btn.classList.toggle('border-stone-200');
+            btn.classList.toggle('bg-teal-50');
+            btn.classList.toggle('border-teal-300');
+            btn.classList.toggle('text-teal-900');
+            btn.classList.toggle('font-semibold');
+        }
+
+        // Intake completion button logic
+        function submitIntake() {
+            switchScreen(2);
+        }
+
+        // Proceed from validation to Parental Gate
+        function goToGate() {
+            switchScreen(3);
+        }
+
+        // Verify parental gate access
+        function verifyAccess() {
+            switchScreen(4);
+        }
+
+        // Finish story session & return to screen 1
+        function finishStorySession() {
+            alert('הקראת הסיפור הסתיימה בהצלחה! תחושת המסוגלות ההורית עלתה, מנטליזציה בוצעה בהצלחה 🐻❤️');
+            switchScreen(1);
+            // clear state
+            document.getElementById('free-text-input').value = "";
+        }
+    </script>
+
+</body>
+</html>
