@@ -31,6 +31,13 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        /* Login screen animal card styles */
+        .sim-animal-card {
+            transition: all 0.2s ease;
+        }
+        .sim-animal-card:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="min-height-screen p-6 lg:p-12">
@@ -57,7 +64,18 @@
         <section class="lg:col-span-3 flex flex-col gap-4">
             <h2 class="text-lg font-bold text-slate-700 mb-1">תפריט מסכי המודול</h2>
             
-            <button onclick="switchScreen(1)" id="btn-screen1" class="screen-nav-btn active flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-teal-500 bg-teal-50 text-teal-900 font-bold shadow-sm">
+            <button onclick="switchScreen(0)" id="btn-screen0" class="screen-nav-btn active flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-teal-500 bg-teal-50 text-teal-900 font-bold shadow-sm">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">0</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך כניסה</p>
+                        <p class="text-xs text-slate-500 font-normal">הזנת שם ובחירת דמות</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-teal-600"></i>
+            </button>
+
+            <button onclick="switchScreen(1)" id="btn-screen1" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
                 <span class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">1</span>
                     <div>
@@ -134,7 +152,13 @@
                     
                     <!-- Simulated App Top Bar -->
                     <div class="bg-stone-50 px-4 py-2 flex justify-between items-center text-xs text-slate-500 border-b border-stone-200 z-10">
-                        <img src="zipur18, 2026, 09_36_37 AM.png" alt="ציפור" class="h-6 object-contain">
+                        <div class="flex items-center gap-2">
+                            <img src="zipur18, 2026, 09_36_37 AM.png" alt="zipur" class="h-6 object-contain">
+                            <div id="user-info" class="hidden flex items-center gap-1 bg-teal-50 px-2 py-1 rounded-full">
+                                <span id="user-emoji" class="text-sm"></span>
+                                <span id="user-name" class="font-bold text-teal-700 text-[10px]"></span>
+                            </div>
+                        </div>
                         <div class="flex items-center gap-1.5 direction-ltr">
                             <i class="fa-solid fa-signal text-[10px]"></i>
                             <i class="fa-solid fa-wifi text-[10px]"></i>
@@ -146,8 +170,108 @@
                     <!-- SCREEN CONTAINER: DYNAMIC CONTENT AREA -->
                     <div class="flex-grow overflow-y-auto custom-scrollbar p-5 pb-8 relative" id="mobile-viewport">
                         
+                        <!-- SIMULATED SCREEN 0: LOGIN SCREEN -->
+                        <div id="sim-screen0" class="sim-screen block">
+                            <!-- Logo Section -->
+                            <div class="text-center mb-6">
+                                <div class="inline-block bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl p-4 shadow-lg mb-3">
+                                    <img src="zipur18, 2026, 09_36_37 AM.png" alt="zipur Logo" class="h-16 w-auto mx-auto">
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-800">ברוכים הבאים</h2>
+                                <p class="text-[10px] text-slate-500 mt-1">מסע של חיבור והבנה</p>
+                            </div>
+
+                            <!-- Username Input -->
+                            <div class="mb-4 text-right">
+                                <label class="block text-slate-700 font-bold text-xs mb-2">
+                                    <i class="fa-solid fa-user text-purple-600 ml-1"></i>
+                                    הכנס את שמך
+                                </label>
+                                <input
+                                    type="text"
+                                    id="sim-username"
+                                    placeholder="לדוגמה: אבא דוב..."
+                                    class="w-full px-3 py-2 text-xs border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none text-right"
+                                    maxlength="20"
+                                >
+                            </div>
+
+                            <!-- Animal Selection -->
+                            <div class="mb-4 text-right">
+                                <label class="block text-slate-700 font-bold text-xs mb-2">
+                                    <i class="fa-solid fa-paw text-purple-600 ml-1"></i>
+                                    בחר את הדמות שלך
+                                </label>
+                                
+                                <div class="grid grid-cols-5 gap-2">
+                                    <div class="sim-animal-card bg-gradient-to-br from-amber-50 to-orange-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-amber-300 transition"
+                                         onclick="selectSimAnimal(this, 'bear', 'דוב', '🐻')">
+                                        <span class="text-2xl block">🐻</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">דוב</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-pink-50 to-rose-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-pink-300 transition"
+                                         onclick="selectSimAnimal(this, 'rabbit', 'ארנבת', '🐰')">
+                                        <span class="text-2xl block">🐰</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">ארנבת</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-yellow-50 to-amber-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-yellow-300 transition"
+                                         onclick="selectSimAnimal(this, 'lion', 'אריה', '🦁')">
+                                        <span class="text-2xl block">🦁</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">אריה</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-orange-50 to-red-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-orange-300 transition"
+                                         onclick="selectSimAnimal(this, 'fox', 'שועל', '🦊')">
+                                        <span class="text-2xl block">🦊</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">שועל</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-slate-50 to-blue-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-blue-300 transition"
+                                         onclick="selectSimAnimal(this, 'owl', 'ינשוף', '🦉')">
+                                        <span class="text-2xl block">🦉</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">ינשוף</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Selection Display -->
+                            <div id="sim-selection-display" class="hidden mb-4 p-2 bg-emerald-50 border border-emerald-200 rounded-xl text-right">
+                                <p class="text-[10px] text-emerald-800">
+                                    <i class="fa-solid fa-check-circle text-emerald-600 ml-1"></i>
+                                    <strong id="sim-selected-name"></strong> בחר/ה ב<strong id="sim-selected-animal"></strong>
+                                    <span id="sim-selected-emoji" class="text-lg mr-1"></span>
+                                </p>
+                            </div>
+
+                            <!-- Enter Button -->
+                            <button
+                                id="sim-enter-btn"
+                                onclick="enterSimApp()"
+                                disabled
+                                class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed text-white font-bold text-xs py-3 rounded-xl transition duration-300 shadow-sm"
+                            >
+                                <span id="sim-btn-text">בחר שם ודמות כדי להתחיל</span>
+                            </button>
+
+                            <!-- Privacy Notice -->
+                            <div class="mt-4 p-2 bg-slate-50 rounded-lg text-right">
+                                <p class="text-[9px] text-slate-600 leading-relaxed">
+                                    <i class="fa-solid fa-shield-halved text-slate-500 ml-1"></i>
+                                    <strong>פרטיות מלאה:</strong> המידע שלך מוצפן ומאובטח.
+                                </p>
+                            </div>
+                        </div>
+
                         <!-- SIMULATED SCREEN 1: DECOMPRESS / INTAKE -->
-                        <div id="sim-screen1" class="sim-screen block">
+                        <div id="sim-screen1" class="sim-screen hidden">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md">צעד 1 מתוך 3</span>
                                 <h3 class="text-2xl font-bold text-slate-800 mt-2">מה שלומך היום?</h3>
@@ -441,7 +565,7 @@
             <!-- Dynamic Spec Title -->
             <div id="spec-header" class="border-b border-stone-150 pb-4 mb-5">
                 <span class="text-xs font-bold text-teal-600 uppercase tracking-wide">תיעוד ממשק משתמש ופונקציונליות</span>
-                <h2 id="spec-title" class="text-2xl font-bold text-slate-800 mt-1">אפיון מסך 1: מסך שיתוף וויסות (Safe Intake)</h2>
+                <h2 id="spec-title" class="text-2xl font-bold text-slate-800 mt-1">אפיון מסך 0: מסך כניסה (Login Screen)</h2>
             </div>
 
             <!-- Spec Content Area -->
@@ -454,7 +578,7 @@
                         מטרת המסך (Screen Goal)
                     </h3>
                     <p class="leading-relaxed">
-                        לאפשר להורה המוצף/טעון אשמה להזין אירוע או טריגר במינימום חיכוך קוגניטיבי. ההנחה הקלינית היא שההורה נמצא כרגע במצב של סטרס ולכן לא מסוגל להקלדות ממושכות, ניווט מורכב או ניתוחים אנליטיים.
+                        ליצור חוויית כניסה ראשונית חמה ומזמינה שמאפשרת למשתמש להזדהות ולבחור דמות מלווה אישית, תוך יצירת קשר רגשי ראשוני עם האפליקציה.
                     </p>
                 </div>
 
@@ -465,10 +589,12 @@
                         רכיבי ממשק מפתח (UI Elements)
                     </h3>
                     <ul class="list-disc pr-5 space-y-1.5">
-                        <li><strong>כותרת ראשית חמה (RTL Header):</strong> "מה קרה היום?" עם כותרת משנה מרגיעה ומאפשרת.</li>
-                        <li><strong>מטריצת תגיות מהירות (Fast Tags Matrix):</strong> כפתורים גדולים ונגישים המייצגים את אירועי הפוסט-טראומה הדומיננטיים (כעס, דריכות, הסתגרות, היבהלות). לחיצה אחת בוחרת ומזינה אותם.</li>
-                        <li><strong>כפתור הקלטה קולית מרכזי (Record Component):</strong> עיגול בולט ונושם. לחיצה מתחילה הקלטת אודיו (Voice to text). בעל חיווי ויזואלי של טבעת פועמת (Ping animation).</li>
-                        <li><strong>תיבת טקסט חופשי (Optional Text Area):</strong> עבור הורים שמעדיפים לפרט בכתב.</li>
+                        <li><strong>לוגו מרכזי (Centered Logo):</strong> הלוגו של zipur מוצג בגדול במרכז המסך עם רקע צבעוני ואנימציית כניסה.</li>
+                        <li><strong>שדה הזנת שם משתמש (Username Input):</strong> שדה טקסט פשוט וברור עם placeholder מעודד (לדוגמה: 'אבא דוב, אמא ארנבת...').</li>
+                        <li><strong>מטריצת בחירת דמויות (Animal Character Grid):</strong> 5 דמויות חיות מצוירות (דוב, ארנבת, אריה, שועל, ינשוף) עם רקעים צבעוניים ייחודיים.</li>
+                        <li><strong>אנימציות אינטראקטיביות:</strong> כל דמות עם אפקט hover וריחוף, סימון ויזואלי ברור של הבחירה.</li>
+                        <li><strong>תצוגת בחירה דינמית:</strong> הצגת השם והדמות שנבחרו בזמן אמת.</li>
+                        <li><strong>כפתור כניסה חכם:</strong> כפתור שמתעדכן דינמית ומתאפשר רק לאחר השלמת שני השדות.</li>
                     </ul>
                 </div>
 
@@ -479,9 +605,10 @@
                         חוקיות קלינית ומוצרית (Spec & Rules)
                     </h3>
                     <ul class="list-disc pr-5 space-y-1.5">
-                        <li><strong>אבטחה ודיסקרטיות:</strong> המערכת פועלת במצב מאובטח לחלוטין. לא מתבצעת שמירה של קבצי הסאונד המקוריים של ההורה אלא המרה מיידית לטקסט מעובד (אנונימי) למנוע ה-AI.</li>
-                        <li><strong>הפחתת אשמה ראשונית:</strong> חוקיות הממשק לא מכריחה שום שדה חובה (למעט קלט אחד כלשהו - קול או כפתור). אין חיוויי שגיאה אגרסיביים ("שכחת להזין").</li>
-                        <li><strong>זיהוי קווים אדומים קליניים (Safety Interruption):</strong> אם המערכת מזהה מילים הקשורות לפגיעה עצמית, אלימות חמורה כלפי הילד או אובדנות, התהליך נעצר מיד ועובר למסך חסימה קליני (הפניה לקו נט"ל/ער"ן).</li>
+                        <li><strong>חוויית משתמש חלקה:</strong> אין שדות חובה אגרסיביים, אלא הנחיה עדינה דרך הכפתור המושבת.</li>
+                        <li><strong>פרטיות מובנית:</strong> הודעת פרטיות ברורה המדגישה שהמידע נשאר במכשיר.</li>
+                        <li><strong>מעבר חלק:</strong> לאחר בחירה, המערכת שומרת את הנתונים ב-sessionStorage ועוברת למסך הראשי.</li>
+                        <li><strong>תמיכה במקלדת:</strong> אפשרות ללחוץ Enter להתחברות מהירה.</li>
                     </ul>
                 </div>
 
@@ -492,8 +619,9 @@
                         מקרי קצה וטיפול בשגיאות (Edge Cases)
                     </h3>
                     <ul class="list-disc pr-5 space-y-1.5">
-                        <li><strong>שגיאת הרשאות מיקרופון:</strong> במידה וההורה חסם הרשאת מיקרופון, הכפתור יקבל מצב Disabled אפור, ויוצג באנר עדין בתחתית שמנחה להפעיל הרשאות עם קישור ישיר להגדרות המכשיר.</li>
-                        <li><strong>לחיצה בשוגג ללא קלט:</strong> במידה וההורה לחץ על "שלח" ללא הזנת קוד או הקלטה, המערכת לא תציג סימון שגיאה אדום אלא תפעיל בעדינות את מנגנון ה-Voice עם כרטיסיית הצעה: "לא בטוח מה להגיד? הקלט נשימה או לחץ על הכפתור שהכי קרוב למה שחווית".</li>
+                        <li><strong>ניסיון כניסה ללא בחירה:</strong> הכפתור נשאר מושבת ומציג הודעה מנחה.</li>
+                        <li><strong>שם ארוך מדי:</strong> הגבלה של 20 תווים למניעת בעיות תצוגה.</li>
+                        <li><strong>חזרה למסך כניסה:</strong> המשתמש יכול לחזור למסך זה בכל עת מהתפריט הצדדי.</li>
                     </ul>
                 </div>
 
@@ -507,6 +635,29 @@
     <script>
         // Screen specification DB for reactive updates
         const specs = {
+            0: {
+                title: "אפיון מסך 0: מסך כניסה (Login Screen)",
+                goal: "ליצור חוויית כניסה ראשונית חמה ומזמינה שמאפשרת למשתמש להזדהות ולבחור דמות מלווה אישית, תוך יצירת קשר רגשי ראשוני עם האפליקציה.",
+                elements: [
+                    "<strong>לוגו מרכזי (Centered Logo):</strong> הלוגו של zipur מוצג בגדול במרכז המסך עם רקע צבעוני ואנימציית כניסה.",
+                    "<strong>שדה הזנת שם משתמש (Username Input):</strong> שדה טקסט פשוט וברור עם placeholder מעודד (לדוגמה: 'אבא דוב, אמא ארנבת...').",
+                    "<strong>מטריצת בחירת דמויות (Animal Character Grid):</strong> 5 דמויות חיות מצוירות (דוב, ארנבת, אריה, שועל, ינשוף) עם רקעים צבעוניים ייחודיים.",
+                    "<strong>אנימציות אינטראקטיביות:</strong> כל דמות עם אפקט hover וריחוף, סימון ויזואלי ברור של הבחירה.",
+                    "<strong>תצוגת בחירה דינמית:</strong> הצגת השם והדמות שנבחרו בזמן אמת.",
+                    "<strong>כפתור כניסה חכם:</strong> כפתור שמתעדכן דינמית ומתאפשר רק לאחר השלמת שני השדות."
+                ],
+                rules: [
+                    "<strong>חוויית משתמש חלקה:</strong> אין שדות חובה אגרסיביים, אלא הנחיה עדינה דרך הכפתור המושבת.",
+                    "<strong>פרטיות מובנית:</strong> הודעת פרטיות ברורה המדגישה שהמידע נשאר במכשיר.",
+                    "<strong>מעבר חלק:</strong> לאחר בחירה, המערכת שומרת את הנתונים ב-sessionStorage ועוברת למסך הראשי.",
+                    "<strong>תמיכה במקלדת:</strong> אפשרות ללחוץ Enter להתחברות מהירה."
+                ],
+                edges: [
+                    "<strong>ניסיון כניסה ללא בחירה:</strong> הכפתור נשאר מושבת ומציג הודעה מנחה.",
+                    "<strong>שם ארוך מדי:</strong> הגבלה של 20 תווים למניעת בעיות תצוגה.",
+                    "<strong>חזרה למסך כניסה:</strong> המשתמש יכול לחזור למסך זה בכל עת מהתפריט הצדדי."
+                ]
+            },
             1: {
                 title: "אפיון מסך 1: מסך שיתוף וויסות (Safe Intake)",
                 goal: "לאפשר להורה המוצף/טעון אשמה להזין אירוע או טריגר במינימום חיכוך קוגניטיבי. ההנחה הקלינית היא שההורה נמצא כרגע במצב של סטרס ולכן לא מסוגל להקלדות ממושכות, ניווט מורכב או ניתוחים אנליטיים.",
@@ -599,12 +750,14 @@
         };
 
         // Track current screen for back navigation
-        let currentScreen = 1;
+        let currentScreen = 0;
 
         // Back navigation function
         function goBack() {
             // Navigate to previous screen based on current screen
-            if (currentScreen === 2) {
+            if (currentScreen === 1) {
+                switchScreen(0);
+            } else if (currentScreen === 2) {
                 switchScreen(1);
             } else if (currentScreen === 3) {
                 switchScreen(2);
@@ -647,6 +800,11 @@
                 screen.classList.add('hidden');
             });
             document.getElementById(`sim-screen${screenNum}`).classList.remove('hidden');
+
+            // Initialize login screen input if switching to screen 0
+            if (screenNum === 0) {
+                setTimeout(initSimUsernameInput, 100);
+            }
 
             // 3. Update Specifications Documentation Panel
             const currentSpec = specs[screenNum];
@@ -771,6 +929,118 @@
             // clear state
             document.getElementById('free-text-input').value = "";
         }
+
+        // Login screen simulator variables
+        let simSelectedAnimal = null;
+        let simSelectedAnimalName = '';
+        let simSelectedEmoji = '';
+        let simUsername = '';
+
+        // Animal selection handler for simulator
+        function selectSimAnimal(element, animalId, animalName, emoji) {
+            // Remove selection from all cards
+            document.querySelectorAll('.sim-animal-card').forEach(card => {
+                card.classList.remove('border-emerald-400');
+                card.classList.add('border-transparent');
+            });
+
+            // Add selection to clicked card
+            element.classList.remove('border-transparent');
+            element.classList.add('border-emerald-400');
+
+            // Store selection
+            simSelectedAnimal = animalId;
+            simSelectedAnimalName = animalName;
+            simSelectedEmoji = emoji;
+
+            // Update display
+            updateSimSelectionDisplay();
+            checkSimFormValidity();
+        }
+
+        // Username input handler for simulator - will be initialized after DOM loads
+        function initSimUsernameInput() {
+            const simUsernameInput = document.getElementById('sim-username');
+            if (simUsernameInput) {
+                simUsernameInput.addEventListener('input', function(e) {
+                    simUsername = e.target.value.trim();
+                    updateSimSelectionDisplay();
+                    checkSimFormValidity();
+                });
+            }
+        }
+
+        // Update selection display in simulator
+        function updateSimSelectionDisplay() {
+            const display = document.getElementById('sim-selection-display');
+            const nameSpan = document.getElementById('sim-selected-name');
+            const animalSpan = document.getElementById('sim-selected-animal');
+            const emojiSpan = document.getElementById('sim-selected-emoji');
+
+            if (simUsername && simSelectedAnimal) {
+                display.classList.remove('hidden');
+                nameSpan.textContent = simUsername;
+                animalSpan.textContent = simSelectedAnimalName;
+                emojiSpan.textContent = simSelectedEmoji;
+            } else {
+                display.classList.add('hidden');
+            }
+        }
+
+        // Check if form is valid in simulator
+        function checkSimFormValidity() {
+            const enterBtn = document.getElementById('sim-enter-btn');
+            const btnText = document.getElementById('sim-btn-text');
+
+            if (simUsername && simSelectedAnimal) {
+                enterBtn.disabled = false;
+                btnText.textContent = 'התחל את המסע שלך';
+            } else {
+                enterBtn.disabled = true;
+                btnText.textContent = 'בחר שם ודמות כדי להתחיל';
+            }
+        }
+
+        // Enter app handler for simulator
+        function enterSimApp() {
+            if (!simUsername || !simSelectedAnimal) {
+                return;
+            }
+
+            // Update user info in top bar
+            const userInfo = document.getElementById('user-info');
+            const userName = document.getElementById('user-name');
+            const userEmoji = document.getElementById('user-emoji');
+            
+            userName.textContent = simUsername;
+            userEmoji.textContent = simSelectedEmoji;
+            userInfo.classList.remove('hidden');
+            userInfo.classList.add('flex');
+
+            // Move to screen 1
+            switchScreen(1);
+        }
+
+        // Load user info from login screen and initialize login screen
+        window.addEventListener('DOMContentLoaded', function() {
+            // Initialize login screen input handler
+            initSimUsernameInput();
+            
+            // Load user info from session storage
+            const username = sessionStorage.getItem('username');
+            const emoji = sessionStorage.getItem('selectedEmoji');
+            
+            if (username && emoji) {
+                const userInfo = document.getElementById('user-info');
+                const userName = document.getElementById('user-name');
+                const userEmoji = document.getElementById('user-emoji');
+                
+                userName.textContent = username;
+                userEmoji.textContent = emoji;
+                userInfo.classList.remove('hidden');
+                userInfo.classList.add('flex');
+            }
+        });
     </script>
 
 </body>
