@@ -101,6 +101,17 @@
                 <i class="fa-solid fa-chevron-left text-slate-400"></i>
             </button>
 
+            <button onclick="switchScreen(5)" id="btn-screen5" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">5</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך הקראת הסיפור</p>
+                        <p class="text-xs text-slate-500 font-normal">הצגת הסיפור המלא לילד</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
             <div class="mt-6 bg-slate-800 text-white p-4 rounded-xl text-sm">
                 <p class="font-bold mb-2 flex items-center gap-2 text-teal-400">
                     <i class="fa-solid fa-mobile-screen-button"></i>
@@ -123,7 +134,7 @@
                     
                     <!-- Simulated App Top Bar -->
                     <div class="bg-stone-50 px-4 py-2 flex justify-between items-center text-xs text-slate-500 border-b border-stone-200 z-10">
-                        <span class="font-semibold text-right">MentaCare App</span>
+                        <span class="font-semibold text-right"> ציפור</span>
                         <div class="flex items-center gap-1.5 direction-ltr">
                             <i class="fa-solid fa-signal text-[10px]"></i>
                             <i class="fa-solid fa-wifi text-[10px]"></i>
@@ -341,6 +352,84 @@
                             </div>
                         </div>
 
+                        <!-- SIMULATED SCREEN 5: STORY READING MODE -->
+                        <div id="sim-screen5" class="sim-screen hidden">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-3xl mb-3">
+                                    🐻
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-800">הסיפור של אבא דוב</h3>
+                                <p class="text-slate-500 text-xs mt-1">סיפור מתווך להקראה משותפת</p>
+                            </div>
+
+                            <!-- Story Content Area -->
+                            <div class="mt-5 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-5 text-right max-h-[400px] overflow-y-auto custom-scrollbar">
+                                <div class="space-y-4 text-sm leading-relaxed text-slate-800">
+                                    <p class="font-bold text-amber-800 text-base mb-3">🌲 פעם, ביער הגדול...</p>
+                                    
+                                    <p>
+                                        גר אבא דוב חזק ואוהב עם דובון קטן שלו. אבא דוב תמיד דאג לדובון - הביא לו אוכל, שיחק איתו, וסיפר לו סיפורים לפני השינה.
+                                    </p>
+                                    
+                                    <p class="bg-white/60 p-3 rounded-lg border border-amber-200">
+                                        <strong>💨 יום אחד...</strong><br/>
+                                        בזמן ששיחקו ביער, נשמע רעש חזק מאוד - בום! זה היה רק בלון שהתפוצץ, אבל אבא דוב הרגיש משהו מוזר בתוך הלב שלו.
+                                    </p>
+                                    
+                                    <p>
+                                        פתאום, סערה קטנה ועמוסה נכנסה לו אל תוך הלב. זו לא הייתה סערה רגילה - זו הייתה סערה מיוחדת שרק דובים מסוימים מכירים, סערה שבאה מזמנים קשים שעברו עליהם.
+                                    </p>
+                                    
+                                    <p class="bg-teal-50/80 p-3 rounded-lg border border-teal-200">
+                                        <strong>🏠 אבא דוב היה צריך...</strong><br/>
+                                        קצת שקט כדי שהסערה תעבור. אז הוא נכנס למערה שלו לרגע, לא כי הוא כועס על דובון, אלא כי הוא רצה לשמור על כולם ולהרגיש טוב יותר.
+                                    </p>
+                                    
+                                    <p>
+                                        דובון קטן ראה את אבא נכנס למערה והרגיש קצת מבולבל. "אולי אבא כועס עליי?" חשב דובון. אבל זה לא היה נכון בכלל!
+                                    </p>
+                                    
+                                    <p class="bg-emerald-50/80 p-3 rounded-lg border border-emerald-200">
+                                        <strong>❤️ כשאבא דוב יצא מהמערה...</strong><br/>
+                                        הוא התיישב ליד דובון והסביר לו: "דובון שלי, הסערה שהייתה בלב שלי היא לא בגללך. זה משהו שקורה לי לפעמים בגלל דברים שקרו לי מזמן. אני אוהב אותך מאוד מאוד, ותמיד אהיה כאן בשבילך."
+                                    </p>
+                                    
+                                    <p>
+                                        דובון הבין שאבא שלו אוהב אותו, וששניהם יכולים לדבר על רגשות קשים. מאז, כל פעם שהסערה חוזרת, דובון יודע שזה לא בגללו, ושאבא דוב עושה את המיטב שלו.
+                                    </p>
+                                    
+                                    <p class="text-center font-bold text-amber-700 text-base mt-4">
+                                        🌟 הסוף 🌟
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Reading Controls -->
+                            <div class="mt-5 grid grid-cols-2 gap-3">
+                                <button onclick="alert('הסיפור יוקרא שוב מההתחלה')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                    קרא שוב
+                                </button>
+                                <button onclick="completeReading()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1 shadow-sm">
+                                    <i class="fa-solid fa-heart"></i>
+                                    סיימנו - תודה!
+                                </button>
+                            </div>
+
+                            <!-- Mentalization Prompt for Parent -->
+                            <div class="mt-4 p-3 bg-teal-50 border border-teal-200 rounded-xl text-right">
+                                <p class="text-xs text-teal-800">
+                                    <strong>💡 טיפ להורה:</strong> לאחר הסיפור, שאל את הילד: "מה דובון הרגיש כשאבא נכנס למערה? ומה אתה הרגשת?"
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -484,6 +573,28 @@
                 edges: [
                     "<strong>חוסר שיתוף פעולה מצד הילד:</strong> במידה והילד לא מעוניין להקשיב לסיפור, כרטיסיית ההדרכה מציעה חלופה מהירה: \"אם הילד חסר סבלנות, אפשר לעבור ישירות לעמוד הסיום שמדגיש את אהבת ההורה, ולהשאיר את השיח למחר\"."
                 ]
+            },
+            5: {
+                title: "אפיון מסך 5: מסך הקראת הסיפור המלא (Story Reading Mode)",
+                goal: "להציג את הסיפור המטאפורי המלא בממשק נקי וידידותי לילד, תוך מתן כלים להורה לנהל את חוויית ההקראה ולבצע מנטליזציה רפלקטיבית בזמן אמת.",
+                elements: [
+                    "<strong>כותרת הסיפור עם אייקון חמים:</strong> שם הסיפור (למשל: 'הסיפור של אבא דוב') מוצג בצורה ידידותית עם אמוג'י רלוונטי.",
+                    "<strong>אזור תוכן הסיפור (Story Content Area):</strong> תיבה מעוצבת עם רקע חם (גרדיאנט של צהוב-כתום) המכילה את הסיפור המלא בפסקאות מובנות עם הדגשות ויזואליות.",
+                    "<strong>הדגשות חזותיות בסיפור:</strong> קטעים מרכזיים מודגשים בתיבות צבעוניות (לבן, תכלת, ירוק) כדי לסייע בקריאה ולהדגיש נקודות מפתח.",
+                    "<strong>כפתורי בקרת קריאה:</strong> 'קרא שוב' לחזרה על הסיפור ו'סיימנו - תודה!' לסיום החוויה.",
+                    "<strong>טיפ מנטליזציה להורה:</strong> תיבת הנחיה קטנה בתחתית עם שאלה מוצעת לשאול את הילד לאחר הסיפור."
+                ],
+                rules: [
+                    "<strong>ממשק נקי ללא הסחות דעת:</strong> המסך מתמקד אך ורק בסיפור, ללא אלמנטים מסיחים או פרסומות.",
+                    "<strong>טקסט קריא וגדול:</strong> גופן ברור בגודל מתאים לקריאה משותפת הורה-ילד.",
+                    "<strong>גלילה חלקה:</strong> אזור התוכן ניתן לגלילה עם סקרולבר מותאם אישית לחוויה נעימה.",
+                    "<strong>שמירת הקשר רגשי:</strong> הסיפור תמיד מסתיים בנימה חיובית של אהבה והבנה הדדית."
+                ],
+                edges: [
+                    "<strong>ילד מבקש לעצור באמצע:</strong> ההורה יכול ללחוץ על 'חזור' בכל שלב ולחזור למסך הבקרה (מסך 4) לשינוי או התאמה.",
+                    "<strong>קריאה חוזרת מרובה:</strong> המערכת מאפשרת קריאה חוזרת ללא הגבלה, מתוך הבנה שילדים זקוקים לחזרה לעיבוד רגשי.",
+                    "<strong>סיום מוקדם:</strong> לחיצה על 'סיימנו' מחזירה למסך הבית עם הודעת הצלחה ומעקב אחר ההתקדמות הרגשית."
+                ]
             }
         };
 
@@ -499,6 +610,8 @@
                 switchScreen(2);
             } else if (currentScreen === 4) {
                 switchScreen(3);
+            } else if (currentScreen === 5) {
+                switchScreen(4);
             }
         }
 
@@ -646,8 +759,13 @@
             switchScreen(4);
         }
 
-        // Finish story session & return to screen 1
+        // Finish story session & move to reading screen
         function finishStorySession() {
+            switchScreen(5);
+        }
+
+        // Complete reading and return to screen 1
+        function completeReading() {
             alert('הקראת הסיפור הסתיימה בהצלחה! תחושת המסוגלות ההורית עלתה, מנטליזציה בוצעה בהצלחה 🐻❤️');
             switchScreen(1);
             // clear state
