@@ -44,7 +44,7 @@
                 <p class="text-slate-600 mt-1">מודול הורה מתמודד (PTSD) - זרימת התמרה מטראומה לסיפור מתווך</p>
             </div>
             <div class="text-sm text-slate-500">
-                <p><strong>מנהלת מוצר:</strong> מנהלת מוצר בריאות דיגיטלית</p>
+                <p><strong>מנהלת מוצר:</strong> בריאות דיגיטלית</p>
                 <p><strong>גרסה:</strong> 1.0 (אינטראקטיבית)</p>
             </div>
         </div>
@@ -61,7 +61,7 @@
                 <span class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">1</span>
                     <div>
-                        <p class="text-sm font-bold">מסך פריקה וויסות</p>
+                        <p class="text-sm font-bold">מסך שיתוף וויסות</p>
                         <p class="text-xs text-slate-500 font-normal">הזנת טריגר / אירוע מותאמת</p>
                     </div>
                 </span>
@@ -139,8 +139,8 @@
                         <div id="sim-screen1" class="sim-screen block">
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md">צעד 1 מתוך 3</span>
-                                <h3 class="text-2xl font-bold text-slate-800 mt-2">מה קרה היום?</h3>
-                                <p class="text-slate-500 text-xs mt-1">כאן המקום לפרוק באופן חופשי ומאובטח. אנחנו כאן ללא שיפוטיות.</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2">מה שלומך היום?</h3>
+                                <p class="text-slate-500 text-xs mt-1">כאן המקום לשתף באירועי היום באופן חופשי ומאובטח. אנחנו כאן ללא שיפוטיות.</p>
                             </div>
 
                             <!-- Fast Tag Pills Matrix -->
@@ -157,7 +157,7 @@
                                     </button>
                                     <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
                                         <i class="fa-solid fa-door-closed text-slate-500"></i>
-                                        הסתגרתי בחדר וניצלתי
+                                        הסתגרתי בחדר לפרק זמן ארוך
                                     </button>
                                     <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
                                         <i class="fa-solid fa-eye text-red-500"></i>
@@ -168,7 +168,7 @@
 
                             <!-- Voice Recording Block -->
                             <div class="mt-6 p-4 bg-teal-50/50 border border-teal-100 rounded-2xl text-center flex flex-col items-center">
-                                <p class="text-xs font-bold text-slate-600 mb-3">או לפרוק בהקלטה קולית ללא מאמץ:</p>
+                                <p class="text-xs font-bold text-slate-600 mb-3">או לשתף בהקלטה קולית ללא מאמץ:</p>
                                 
                                 <!-- Pulsing Record Button -->
                                 <button id="record-btn" onclick="toggleRecording()" class="w-16 h-16 rounded-full bg-teal-600 hover:bg-teal-700 text-white flex items-center justify-center shadow-lg hover:shadow-teal-100 transition duration-300 relative">
@@ -195,6 +195,12 @@
 
                         <!-- SIMULATED SCREEN 2: VALIDATION / REDUCING GUILT -->
                         <div id="sim-screen2" class="sim-screen hidden">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">צעד 2 מתוך 3</span>
                                 <h3 class="text-2xl font-bold text-slate-800 mt-2">אנחנו איתך בזה.</h3>
@@ -240,6 +246,12 @@
 
                         <!-- SIMULATED SCREEN 3: PARENTAL GATE (SECURITY) -->
                         <div id="sim-screen3" class="sim-screen hidden">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-amber-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
                             <div class="text-center mt-6">
                                 <div class="w-16 h-16 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center mx-auto text-2xl shadow-sm">
                                     <i class="fa-solid fa-lock"></i>
@@ -278,6 +290,12 @@
 
                         <!-- SIMULATED SCREEN 4: STORY REVIEW & PARENT COACHING -->
                         <div id="sim-screen4" class="sim-screen hidden">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-slate-600 bg-stone-100 px-2.5 py-1 rounded-md">צעד 3 מתוך 3</span>
                                 <h3 class="text-xl font-bold text-slate-800 mt-2">מסך הקראה והדרכה</h3>
@@ -334,7 +352,7 @@
             <!-- Dynamic Spec Title -->
             <div id="spec-header" class="border-b border-stone-150 pb-4 mb-5">
                 <span class="text-xs font-bold text-teal-600 uppercase tracking-wide">תיעוד ממשק משתמש ופונקציונליות</span>
-                <h2 id="spec-title" class="text-2xl font-bold text-slate-800 mt-1">אפיון מסך 1: מסך פריקה וויסות (Safe Intake)</h2>
+                <h2 id="spec-title" class="text-2xl font-bold text-slate-800 mt-1">אפיון מסך 1: מסך שיתוף וויסות (Safe Intake)</h2>
             </div>
 
             <!-- Spec Content Area -->
@@ -401,10 +419,10 @@
         // Screen specification DB for reactive updates
         const specs = {
             1: {
-                title: "אפיון מסך 1: מסך פריקה וויסות (Safe Intake)",
+                title: "אפיון מסך 1: מסך שיתוף וויסות (Safe Intake)",
                 goal: "לאפשר להורה המוצף/טעון אשמה להזין אירוע או טריגר במינימום חיכוך קוגניטיבי. ההנחה הקלינית היא שההורה נמצא כרגע במצב של סטרס ולכן לא מסוגל להקלדות ממושכות, ניווט מורכב או ניתוחים אנליטיים.",
                 elements: [
-                    "<strong>כותרת ראשית חמה (RTL Header):</strong> \"מה קרה היום?\" עם כותרת משנה מרגיעה ומאפשרת.",
+                    "<strong>כותרת ראשית חמה (RTL Header):</strong> \"מה שלומך היום?\" עם כותרת משנה מרגיעה ומאפשרת.",
                     "<strong>מטריצת תגיות מהירות (Fast Tags Matrix):</strong> כפתורים גדולים ונגישים המייצגים את אירועי הפוסט-טראומה הדומיננטיים (כעס, דריכות, הסתגרות, היבהלות). לחיצה אחת בוחרת ומזינה אותם.",
                     "<strong>כפתור הקלטה קולית מרכזי (Record Component):</strong> עיגול בולט ונושם. לחיצה מתחילה הקלטת אודיו (Voice to text). בעל חיווי ויזואלי של טבעת פועמת (Ping animation).",
                     "<strong>תיבת טקסט חופשי (Optional Text Area):</strong> עבור הורים שמעדיפים לפרט בכתב."
@@ -469,8 +487,25 @@
             }
         };
 
+        // Track current screen for back navigation
+        let currentScreen = 1;
+
+        // Back navigation function
+        function goBack() {
+            // Navigate to previous screen based on current screen
+            if (currentScreen === 2) {
+                switchScreen(1);
+            } else if (currentScreen === 3) {
+                switchScreen(2);
+            } else if (currentScreen === 4) {
+                switchScreen(3);
+            }
+        }
+
         // Screen switching controller
         function switchScreen(screenNum) {
+            // Update current screen tracker
+            currentScreen = screenNum;
             // 1. Update Navigation Buttons Style
             document.querySelectorAll('.screen-nav-btn').forEach(btn => {
                 btn.classList.remove('active', 'border-teal-500', 'bg-teal-50', 'text-teal-900', 'font-bold', 'shadow-sm');
