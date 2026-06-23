@@ -38,6 +38,19 @@
         .sim-animal-card:hover {
             transform: translateY(-2px);
         }
+        /* Registration screen bird card styles */
+        .reg-bird-card {
+            transition: all 0.2s ease;
+        }
+        .reg-bird-card:hover {
+            transform: translateY(-2px);
+        }
+        /* Shake animation for wrong code */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
     </style>
 </head>
 <body class="min-height-screen p-6 lg:p-12">
@@ -64,6 +77,17 @@
         <section class="lg:col-span-3 flex flex-col gap-4">
             <h2 class="text-lg font-bold text-slate-700 mb-1">תפריט מסכי המודול</h2>
             
+            <button onclick="switchScreen(-1)" id="btn-screen-1" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">-1</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך הרשמה</p>
+                        <p class="text-xs text-slate-500 font-normal">יצירת פרופיל משתמש</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
             <button onclick="switchScreen(0)" id="btn-screen0" class="screen-nav-btn active flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-teal-500 bg-teal-50 text-teal-900 font-bold shadow-sm">
                 <span class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">0</span>
@@ -170,22 +194,154 @@
                     <!-- SCREEN CONTAINER: DYNAMIC CONTENT AREA -->
                     <div class="flex-grow overflow-y-auto custom-scrollbar p-5 pb-8 relative" id="mobile-viewport">
                         
+                        <!-- SIMULATED SCREEN -1: REGISTRATION SCREEN -->
+                        <div id="sim-screen-1" class="sim-screen hidden">
+                            <!-- Logo Section at Top -->
+                            <div class="text-center mb-4">
+                                <div class="inline-block bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl p-4 shadow-lg mb-3">
+                                    <img src="zipur18, 2026, 09_36_37 AM.png" alt="zipur Logo" class="h-16 w-auto mx-auto">
+                                </div>
+                            </div>
+
+                            <!-- App Description -->
+                            <div class="mb-5 p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-indigo-100 text-right">
+                                <h3 class="text-sm font-bold text-indigo-900 mb-1">ברוכים הבאים ל-zipur</h3>
+                                <p class="text-[10px] text-slate-600 leading-relaxed">
+                                    אפליקציה ייחודית המאפשרת להפוך רגעים ואירועים לסיפורים מתווכים עבור ילדים, תוך שמירה על קשר רגשי ובטוח.
+                                </p>
+                            </div>
+
+                            <!-- Registration Form -->
+                            <div class="space-y-3">
+                                <!-- Username Input -->
+                                <div class="text-right">
+                                    <label class="block text-slate-700 font-bold text-xs mb-1.5">
+                                        <i class="fa-solid fa-user text-indigo-600 ml-1"></i>
+                                        שם משתמש
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="reg-username"
+                                        placeholder="הזן שם משתמש..."
+                                        class="w-full px-3 py-2 text-xs border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:outline-none text-right"
+                                        maxlength="20"
+                                    >
+                                </div>
+
+                                <!-- Secret Code Input -->
+                                <div class="text-right">
+                                    <label class="block text-slate-700 font-bold text-xs mb-1.5">
+                                        <i class="fa-solid fa-lock text-indigo-600 ml-1"></i>
+                                        קוד סודי (4 ספרות)
+                                    </label>
+                                    <input
+                                        type="password"
+                                        id="reg-code"
+                                        placeholder="הזן 4 ספרות..."
+                                        class="w-full px-3 py-2 text-xs border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:outline-none text-center tracking-widest text-lg font-bold"
+                                        maxlength="4"
+                                        pattern="[0-9]*"
+                                        inputmode="numeric"
+                                    >
+                                    <p class="text-[9px] text-slate-500 mt-1">הקוד ישמש להגנה על הפרופיל שלך</p>
+                                </div>
+
+                                <!-- Bird Character Selection -->
+                                <div class="text-right">
+                                    <label class="block text-slate-700 font-bold text-xs mb-2">
+                                        <i class="fa-solid fa-dove text-indigo-600 ml-1"></i>
+                                        בחר את הציפור שלך
+                                    </label>
+                                    
+                                    <div class="grid grid-cols-5 gap-2">
+                                        <!-- Dove -->
+                                        <div class="reg-bird-card bg-gradient-to-br from-blue-50 to-cyan-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-blue-300 transition"
+                                             onclick="selectRegBird(this, 'dove', 'יונה', '🕊️')">
+                                            <span class="text-2xl block">🕊️</span>
+                                            <p class="text-[9px] font-bold text-slate-700 mt-1">יונה</p>
+                                        </div>
+
+                                        <!-- Eagle -->
+                                        <div class="reg-bird-card bg-gradient-to-br from-amber-50 to-yellow-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-amber-300 transition"
+                                             onclick="selectRegBird(this, 'eagle', 'נשר', '🦅')">
+                                            <span class="text-2xl block">🦅</span>
+                                            <p class="text-[9px] font-bold text-slate-700 mt-1">נשר</p>
+                                        </div>
+
+                                        <!-- Parrot -->
+                                        <div class="reg-bird-card bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-green-300 transition"
+                                             onclick="selectRegBird(this, 'parrot', 'תוכי', '🦜')">
+                                            <span class="text-2xl block">🦜</span>
+                                            <p class="text-[9px] font-bold text-slate-700 mt-1">תוכי</p>
+                                        </div>
+
+                                        <!-- Peacock -->
+                                        <div class="reg-bird-card bg-gradient-to-br from-purple-50 to-pink-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-purple-300 transition"
+                                             onclick="selectRegBird(this, 'peacock', 'טווס', '🦚')">
+                                            <span class="text-2xl block">🦚</span>
+                                            <p class="text-[9px] font-bold text-slate-700 mt-1">טווס</p>
+                                        </div>
+
+                                        <!-- Swan -->
+                                        <div class="reg-bird-card bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-slate-300 transition"
+                                             onclick="selectRegBird(this, 'swan', 'ברבור', '🦢')">
+                                            <span class="text-2xl block">🦢</span>
+                                            <p class="text-[9px] font-bold text-slate-700 mt-1">ברבור</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Registration Display -->
+                                <div id="reg-display" class="hidden p-2 bg-indigo-50 border border-indigo-200 rounded-xl text-right">
+                                    <p class="text-[10px] text-indigo-800">
+                                        <i class="fa-solid fa-check-circle text-indigo-600 ml-1"></i>
+                                        <strong id="reg-display-name"></strong> בחר/ה ב<strong id="reg-display-bird"></strong>
+                                        <span id="reg-display-emoji" class="text-lg mr-1"></span>
+                                    </p>
+                                </div>
+
+                                <!-- Register Button -->
+                                <button
+                                    id="reg-submit-btn"
+                                    onclick="submitRegistration()"
+                                    disabled
+                                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed text-white font-bold text-xs py-3 rounded-xl transition duration-300 shadow-sm mt-2"
+                                >
+                                    <span id="reg-btn-text">השלם את כל השדות להרשמה</span>
+                                </button>
+                            </div>
+
+                            <!-- Security Notice -->
+                            <div class="mt-3 p-2 bg-slate-50 rounded-lg text-right">
+                                <p class="text-[9px] text-slate-600 leading-relaxed">
+                                    <i class="fa-solid fa-shield-halved text-slate-500 ml-1"></i>
+                                    <strong>אבטחה:</strong> הקוד הסודי מוצפן ונשמר באופן מאובטח במכשיר שלך בלבד.
+                                </p>
+                            </div>
+                        </div>
+
                         <!-- SIMULATED SCREEN 0: LOGIN SCREEN -->
                         <div id="sim-screen0" class="sim-screen block">
+                            <!-- Back Button -->
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-purple-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
                             <!-- Logo Section -->
                             <div class="text-center mb-6">
                                 <div class="inline-block bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl p-4 shadow-lg mb-3">
                                     <img src="zipur18, 2026, 09_36_37 AM.png" alt="zipur Logo" class="h-16 w-auto mx-auto">
                                 </div>
-                                <h2 class="text-xl font-bold text-slate-800">ברוכים הבאים</h2>
-                                <p class="text-[10px] text-slate-500 mt-1">מסע של חיבור והבנה</p>
+                                <h2 class="text-xl font-bold text-slate-800">שלום</h2>
+                                <p class="text-[10px] text-slate-500 mt-1">התחל במסע של חיבור והבנה</p>
                             </div>
 
                             <!-- Username Input -->
                             <div class="mb-4 text-right">
                                 <label class="block text-slate-700 font-bold text-xs mb-2">
                                     <i class="fa-solid fa-user text-purple-600 ml-1"></i>
-                                    הכנס את שמך
+                                    שם פרטי או כינוי
                                 </label>
                                 <input
                                     type="text"
@@ -200,7 +356,7 @@
                             <div class="mb-4 text-right">
                                 <label class="block text-slate-700 font-bold text-xs mb-2">
                                     <i class="fa-solid fa-paw text-purple-600 ml-1"></i>
-                                    בחר את הדמות שלך
+                                    בחר דמות
                                 </label>
                                 
                                 <div class="grid grid-cols-5 gap-2">
@@ -261,6 +417,14 @@
                                     <i class="fa-solid fa-shield-halved text-slate-500 ml-1"></i>
                                     <strong>פרטיות מלאה:</strong> המידע שלך מוצפן ומאובטח.
                                 </p>
+                            </div>
+
+                            <!-- Registration Link -->
+                            <div class="mt-3 text-center">
+                                <button onclick="switchScreen(-1)" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition duration-200">
+                                    עדיין אין לך חשבון? הירשם כאן
+                                    <i class="fa-solid fa-arrow-left mr-1"></i>
+                                </button>
                             </div>
                         </div>
 
@@ -339,7 +503,7 @@
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">צעד 2 מתוך 3</span>
                                 <h3 class="text-2xl font-bold text-slate-800 mt-2">אנחנו איתך בזה.</h3>
-                                <p class="text-slate-500 text-xs mt-1">לפני שנתקדם לילד, רגע אחד של חמלה עבורך.</p>
+                                <p class="text-slate-500 text-xs mt-1">לפני שנתקדם לסיפור</p>
                             </div>
 
                             <!-- Empathic Validation Box -->
@@ -349,26 +513,45 @@
                                     <h4 class="font-bold text-sm">אתה הורה נהדר שמתמודד</h4>
                                 </div>
                                 <p class="text-xs leading-relaxed text-slate-700">
-                                    התגובה הדרמטית שהתרחשה היום היא סימפטום מוכר של פוסט-טראומה, ולא כשל הורות או חוסר אכפתיות. 
+                                    התגובה הדרמטית שהתרחשה היום היא סימפטום מוכר של פוסט-טראומה, ולא כשל הורות או חוסר אכפתיות.
                                     עצם העובדה שאתה מדווח ומבקש לתווך את זה לילד שלך מראה על חוסן הורי יוצא דופן.
                                 </p>
-                            </div>
-
-                            <!-- Breathing/De-escalation Micro-Interaction -->
-                            <div class="mt-5 p-4 bg-stone-100 rounded-2xl text-center">
-                                <p class="text-xs font-semibold text-slate-600 mb-2">קח נשימה עמוקה לפני שנתחיל (מומלץ):</p>
-                                <div class="w-12 h-12 rounded-full border-4 border-emerald-300 border-t-emerald-600 animate-spin mx-auto my-2" style="animation-duration: 3s;"></div>
-                                <p class="text-[11px] text-slate-500">שאיפה... נשיפה... הירגעות</p>
                             </div>
 
                             <!-- System Status / AI Generation Loader -->
                             <div class="mt-5 pt-3 border-t border-stone-200">
                                 <div class="flex items-center justify-between text-xs text-slate-600 mb-2">
-                                    <span>המנוע מתאים את המטאפורות...</span>
+                                    <span>אנחנו יוצרים את הסיפור...</span>
                                     <span class="font-bold">הסיפור מוכן ב-100%</span>
                                 </div>
                                 <div class="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
                                     <div class="bg-emerald-500 h-full w-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Breathing/De-escalation Micro-Interaction -->
+                            <div class="mt-5 p-4 bg-stone-100 rounded-2xl text-center">
+                                <p class="text-xs font-semibold text-slate-600 mb-2">קח נשימה עמוקה לפני שנתחיל (מומלץ):</p>
+                                
+                                <!-- Breathing animation (hidden initially) -->
+                                <div id="breathingAnimation" class="hidden">
+                                    <div class="w-12 h-12 rounded-full border-4 border-emerald-300 border-t-emerald-600 animate-spin mx-auto my-2" style="animation-duration: 3s;"></div>
+                                    <p class="text-[11px] text-slate-500">שאיפה... נשיפה... הירגעות</p>
+                                    
+                                    <!-- Reset button (shown during breathing) -->
+                                    <button onclick="resetBreathing()" class="mt-3 bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-lg font-semibold text-sm transition duration-150">
+                                        התחל מחדש
+                                    </button>
+                                </div>
+                                
+                                <!-- Breathing buttons -->
+                                <div id="breathingButtons" class="flex gap-3 mt-3">
+                                    <button onclick="startBreathing()" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-4 rounded-lg font-semibold text-sm transition duration-150">
+                                        התחל
+                                    </button>
+                                    <button onclick="skipBreathing()" class="flex-1 bg-slate-300 hover:bg-slate-400 text-slate-700 py-2 px-4 rounded-lg font-semibold text-sm transition duration-150">
+                                        דלג
+                                    </button>
                                 </div>
                             </div>
 
@@ -393,29 +576,47 @@
                                 </div>
                                 <h3 class="text-2xl font-bold text-slate-800 mt-4">שער בטיחות הורית</h3>
                                 <p class="text-slate-500 text-xs mt-1.5 px-4">
-                                    כדי להבטיח שהתוכן וההסבר לא ייחשפו לילד ללא התיווך שלך, אנא אמת את זהותך.
+                                    כדי להבטיח שהתוכן וההסבר לא ייחשפו לילד/ה ללא התיווך שלך, אנא אמת את זהותך.
                                 </p>
                             </div>
 
-                            <!-- Security Verification Form / Simulated Bio-auth -->
+                            <!-- Security Verification Form -->
                             <div class="mt-8 p-5 bg-white border border-stone-200 rounded-2xl shadow-sm text-center">
-                                <p class="text-xs font-semibold text-slate-600 mb-4">אימות ביומטרי או קוד אבטחה:</p>
+                                <p class="text-xs font-semibold text-slate-600 mb-4">הזן את הקוד הסודי שלך:</p>
                                 
-                                <!-- Simulated Face ID Button -->
-                                <button onclick="verifyAccess()" class="w-24 h-24 rounded-2xl bg-stone-50 border border-stone-200 hover:bg-teal-50 hover:border-teal-300 flex flex-col items-center justify-center gap-2 mx-auto transition duration-200">
-                                    <i class="fa-solid fa-face-id text-3xl text-teal-600 animate-pulse"></i>
-                                    <span class="text-[10px] text-slate-500 font-bold">השתמש ב-Face ID</span>
-                                </button>
-
-                                <div class="my-4 text-xs text-slate-400">או הזן קוד סודי:</div>
-
-                                <!-- Input PIN indicator -->
-                                <div class="flex justify-center gap-3">
-                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
-                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
-                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
-                                    <span class="w-3 h-3 rounded-full bg-stone-300"></span>
+                                <!-- PIN Code Input -->
+                                <input
+                                    type="password"
+                                    id="gate-code"
+                                    placeholder="הזן 4 ספרות..."
+                                    class="w-full px-4 py-3 text-center text-2xl font-bold tracking-widest border-2 border-stone-200 rounded-xl focus:border-amber-500 focus:outline-none mb-4"
+                                    maxlength="4"
+                                    pattern="[0-9]*"
+                                    inputmode="numeric"
+                                >
+                                
+                                <!-- Visual PIN Dots -->
+                                <div class="flex justify-center gap-3 mb-4">
+                                    <span id="dot-1" class="w-3 h-3 rounded-full bg-stone-300 transition-all duration-200"></span>
+                                    <span id="dot-2" class="w-3 h-3 rounded-full bg-stone-300 transition-all duration-200"></span>
+                                    <span id="dot-3" class="w-3 h-3 rounded-full bg-stone-300 transition-all duration-200"></span>
+                                    <span id="dot-4" class="w-3 h-3 rounded-full bg-stone-300 transition-all duration-200"></span>
                                 </div>
+
+                                <!-- Verify Button -->
+                                <button
+                                    id="verify-btn"
+                                    onclick="verifySecretCode()"
+                                    disabled
+                                    class="w-full bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-sm py-3 rounded-xl transition duration-200"
+                                >
+                                    <span id="verify-btn-text">הזן קוד בן 4 ספרות</span>
+                                </button>
+                                
+                                <p id="error-msg" class="hidden text-xs text-red-600 mt-3 font-semibold">
+                                    <i class="fa-solid fa-circle-xmark ml-1"></i>
+                                    קוד שגוי, נסה שוב
+                                </p>
                             </div>
 
                             <p class="text-[10px] text-slate-400 text-center mt-6">
@@ -434,44 +635,50 @@
                             <div class="text-right">
                                 <span class="text-xs font-semibold text-slate-600 bg-stone-100 px-2.5 py-1 rounded-md">צעד 3 מתוך 3</span>
                                 <h3 class="text-xl font-bold text-slate-800 mt-2">מסך הקראה והדרכה</h3>
-                                <p class="text-slate-500 text-xs mt-1">מצד ימין מוצג הסיפור לילד, ומצד שמאל כרטיסיות הדרכה בשבילך.</p>
+                                <p class="text-slate-500 text-xs mt-1">הסיפור מוכן לאישורך. זה המקום להציע שינויים והתאמות לפני ההקראה</p>
                             </div>
 
-                            <!-- Double Sided Preview Simulator Structure (Stacked for Mobile view) -->
-                            <div class="mt-4 border-2 border-dashed border-teal-300 rounded-xl p-3 bg-white">
-                                <span class="text-[10px] uppercase font-bold tracking-wider text-teal-600 block mb-1">תצוגת הילד (סיפור מטאפורי):</span>
-                                <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-100 text-right">
-                                    <p class="text-xs font-bold text-slate-800">הסיפור של אבא דוב וסופת הלב 🐻💨</p>
-                                    <p class="text-[11px] leading-relaxed text-slate-600 mt-1">
+                            <!-- Show Story Checkbox -->
+                            <div class="mt-4">
+                                <label class="flex items-center gap-2 cursor-pointer text-right">
+                                    <input type="checkbox" id="showStoryCheckbox" onchange="toggleStoryPreview()" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 focus:ring-2">
+                                    <span class="text-sm font-medium text-slate-700">הצג סיפור</span>
+                                </label>
+                            </div>
+
+                            <!-- Story Preview (Hidden by default) -->
+                            <div id="storyPreview" class="mt-3 border-2 border-dashed border-teal-300 rounded-lg p-3 bg-white hidden">
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-teal-600 block mb-2">תצוגת הסיפור:</span>
+                                <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-100 text-right max-h-[150px] overflow-y-auto custom-scrollbar">
+                                    <p class="text-xs font-bold text-slate-800 mb-2">הסיפור של אבא דוב וסופת הלב 🐻💨</p>
+                                    <p class="text-[11px] leading-relaxed text-slate-600">
                                         "...ופתאום נשמע רעש חזק ביער. אבא דוב הרגיש סערה קטנה ועמוסה נכנסת לו אל תוך הלב. הוא היה צריך קצת שקט, אז הוא נכנס למערה שלו כדי להירגע ולשמור על כולם. דובון קטן ידע שזה לא בגללו..."
                                     </p>
                                 </div>
                             </div>
 
-                            <!-- Parent Coaching Card (The core Mentalization Tool) -->
-                            <div class="mt-4 bg-teal-600 text-white rounded-xl p-4 text-right shadow-sm relative overflow-hidden">
-                                <div class="absolute -right-6 -bottom-6 opacity-10 text-6xl">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <i class="fa-solid fa-user-graduate text-sm text-teal-200"></i>
-                                    <span class="text-xs font-bold text-teal-100">הנחיית עיבוד (Coaching Prompt):</span>
-                                </div>
-                                <h4 class="font-bold text-sm mb-1">עצור לרגע כאן, ושאל את הילד:</h4>
-                                <p class="text-xs text-teal-50">
-                                    "דובון קטן נבהל כשאבא נכנס למערה. גם אתה הרגשת היום קצת מבוהל או עצוב כשהייתי צריך ללכת לחדר?"
-                                </p>
+                            <!-- Edit and Approve Action Buttons -->
+                            <div class="mt-5 grid grid-cols-3 gap-2">
+                                <button onclick="alert('נשלחה בקשה ל-AI לרכך את הסיפור ולהתאים אותו מחדש!')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                                    <span>ריכוך טון</span>
+                                </button>
+                                <button onclick="toggleEditPrompt()" class="bg-amber-100 hover:bg-amber-200 border border-amber-200 text-amber-700 font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                                    <span>ערוך מחדש</span>
+                                </button>
+                                <button onclick="finishStorySession()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1 shadow-sm">
+                                    <span>אשר והקרא</span>
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </button>
                             </div>
 
-                            <!-- Edit and Approve Action Buttons -->
-                            <div class="mt-5 grid grid-cols-2 gap-3">
-                                <button onclick="alert('נשלחה בקשה ל-AI לרכך את הסיפור ולהתאים אותו מחדש!')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                    בקש ריכוך טון
-                                </button>
-                                <button onclick="finishStorySession()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1 shadow-sm">
-                                    אשר והתחל הקראה
-                                    <i class="fa-solid fa-check"></i>
+                            <!-- Edit Prompt Text Area (Hidden by default) -->
+                            <div id="editPrompt" class="mt-4 text-right hidden">
+                                <label class="text-xs font-bold text-slate-500 block mb-1">מה תרצה לשנות?</label>
+                                <textarea id="edit-text-input" placeholder="לדוגמה: כשהתפוצץ הבלון בגינה צעקתי על הילד, הוא נבהל..." class="w-full text-xs p-3 border border-stone-200 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none bg-white text-slate-800 text-right h-16 resize-none"></textarea>
+                                <button onclick="submitEdit()" class="mt-2 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs py-2 rounded-lg transition duration-150">
+                                    שלח לעריכה
                                 </button>
                             </div>
                         </div>
@@ -489,7 +696,7 @@
                                     🐻
                                 </div>
                                 <h3 class="text-2xl font-bold text-slate-800">הסיפור של אבא דוב</h3>
-                                <p class="text-slate-500 text-xs mt-1">סיפור מתווך להקראה משותפת</p>
+                                <p class="text-slate-500 text-xs mt-1">הסיפור מוכן להקראה</p>
                             </div>
 
                             <!-- Story Content Area -->
@@ -635,6 +842,30 @@
     <script>
         // Screen specification DB for reactive updates
         const specs = {
+            '-1': {
+                title: "אפיון מסך -1: מסך הרשמה ובניית פרופיל (Registration Screen)",
+                goal: "ליצור תהליך הרשמה פשוט ומאובטח שמאפשר למשתמש לבנות פרופיל אישי עם שם משתמש, קוד סודי להגנה, ובחירת דמות ציפור ייחודית המייצגת אותו באפליקציה.",
+                elements: [
+                    "<strong>לוגו מרכזי בחלק העליון:</strong> הלוגו של zipur מוצג בגדול במרכז עם רקע צבעוני.",
+                    "<strong>הסבר על האפליקציה:</strong> תיבת טקסט קצרה ומזמינה המסבירה את מטרת האפליקציה ואת הערך שהיא מביאה.",
+                    "<strong>שדה שם משתמש:</strong> קלט טקסט פשוט עם הגבלה של 20 תווים.",
+                    "<strong>שדה קוד סודי:</strong> קלט מספרי של 4 ספרות בדיוק, מוצג כסיסמה (נקודות) עם מקלדת מספרית.",
+                    "<strong>בחירת דמות ציפור:</strong> 5 ציפורים מצוירים (יונה, נשר, תוכי, טווס, ברבור) עם רקעים צבעוניים ייחודיים.",
+                    "<strong>תצוגת בחירה דינמית:</strong> הצגת השם והציפור שנבחרו בזמן אמת.",
+                    "<strong>כפתור הרשמה חכם:</strong> כפתור שמתאפשר רק לאחר מילוי כל השדות."
+                ],
+                rules: [
+                    "<strong>אבטחת קוד סודי:</strong> הקוד מוצפן ונשמר באופן מאובטח ב-localStorage עם הצפנה.",
+                    "<strong>ולידציה מלאה:</strong> בדיקה שהקוד הוא בדיוק 4 ספרות, שם משתמש לא ריק, וציפור נבחרה.",
+                    "<strong>מעבר חלק:</strong> לאחר הרשמה מוצלחת, המערכת עוברת למסך הכניסה (מסך 0).",
+                    "<strong>שמירת פרופיל:</strong> הפרופיל נשמר ב-localStorage ונטען אוטומטית בכניסות הבאות."
+                ],
+                edges: [
+                    "<strong>קוד לא תקין:</strong> אם המשתמש מזין פחות או יותר מ-4 ספרות, השדה מסומן באדום.",
+                    "<strong>שם משתמש קיים:</strong> בדיקה אם שם המשתמש כבר קיים במערכת.",
+                    "<strong>ביטול הרשמה:</strong> אפשרות לחזור למסך הכניסה ללא שמירה."
+                ]
+            },
             0: {
                 title: "אפיון מסך 0: מסך כניסה (Login Screen)",
                 goal: "ליצור חוויית כניסה ראשונית חמה ומזמינה שמאפשרת למשתמש להזדהות ולבחור דמות מלווה אישית, תוך יצירת קשר רגשי ראשוני עם האפליקציה.",
@@ -755,7 +986,9 @@
         // Back navigation function
         function goBack() {
             // Navigate to previous screen based on current screen
-            if (currentScreen === 1) {
+            if (currentScreen === 0) {
+                switchScreen(-1);
+            } else if (currentScreen === 1) {
                 switchScreen(0);
             } else if (currentScreen === 2) {
                 switchScreen(1);
@@ -801,11 +1034,17 @@
             });
             document.getElementById(`sim-screen${screenNum}`).classList.remove('hidden');
 
-            // Handle top bar logo visibility - hide in screen 0, show in others
+            // Handle top bar logo visibility - hide in screens -1 and 0, show in others
             const topBarLogo = document.getElementById('top-bar-logo');
-            if (screenNum === 0) {
+            if (screenNum === -1) {
+                topBarLogo.classList.add('hidden');
+                setTimeout(initRegInputs, 100);
+            } else if (screenNum === 0) {
                 topBarLogo.classList.add('hidden');
                 setTimeout(initSimUsernameInput, 100);
+            } else if (screenNum === 3) {
+                topBarLogo.classList.remove('hidden');
+                setTimeout(initGateCodeInput, 100);
             } else {
                 topBarLogo.classList.remove('hidden');
             }
@@ -921,9 +1160,85 @@
             switchScreen(4);
         }
 
+        // Track edit requests count
+        let editRequestCount = 0;
+        const maxEditRequests = 2;
+
         // Finish story session & move to reading screen
         function finishStorySession() {
             switchScreen(5);
+            // Reset edit count when moving to next screen
+            editRequestCount = 0;
+        }
+
+        // Toggle edit prompt visibility
+        function toggleEditPrompt() {
+            const editPrompt = document.getElementById('editPrompt');
+            editPrompt.classList.toggle('hidden');
+        }
+
+        // Submit edit request
+        function submitEdit() {
+            const editText = document.getElementById('edit-text-input').value;
+            
+            if (!editText.trim()) {
+                alert('אנא הוסף פרטים לעריכה');
+                return;
+            }
+            
+            if (editRequestCount >= maxEditRequests) {
+                alert('הגעת למספר המקסימלי של בקשות עריכה (2). אנא אשר את הסיפור או חזור למסך הקודם.');
+                return;
+            }
+            
+            editRequestCount++;
+            const remainingRequests = maxEditRequests - editRequestCount;
+            
+            // Update story preview with edited version
+            updateStoryPreview(editRequestCount);
+            
+            if (remainingRequests > 0) {
+                alert(`נשלחה בקשה ${editRequestCount} לעריכת הסיפור עם הפרטים שהוספת!\nהסיפור המעודכן מוצג כעת.\nנותרו ${remainingRequests} בקשות עריכה.`);
+            } else {
+                alert('נשלחה בקשת העריכה האחרונה! הסיפור המעודכן מוצג כעת.\nזו הייתה הבקשה השנייה והאחרונה.');
+            }
+            
+            document.getElementById('edit-text-input').value = '';
+            document.getElementById('editPrompt').classList.add('hidden');
+            
+            // Auto-show the story preview if checkbox is not checked
+            const checkbox = document.getElementById('showStoryCheckbox');
+            const storyPreview = document.getElementById('storyPreview');
+            if (!checkbox.checked) {
+                checkbox.checked = true;
+                storyPreview.classList.remove('hidden');
+            }
+        }
+
+        // Update story preview with edited content
+        function updateStoryPreview(editNumber) {
+            const storyTitle = document.querySelector('#storyPreview .text-slate-800');
+            const storyContent = document.querySelector('#storyPreview .text-slate-600');
+            
+            if (editNumber === 1) {
+                storyTitle.textContent = 'הסיפור של אבא דוב וסופת הלב - גרסה מעודכנת 🐻💨✨';
+                storyContent.textContent = '"...ופתאום נשמע רעש חזק ביער. אבא דוב הרגיש סערה קטנה נכנסת לו אל תוך הלב, אבל הוא נשם עמוק ואמר לעצמו: \'זה יעבור\'. הוא נכנס למערה שלו לרגע קט כדי להירגע. דובון קטן ידע שאבא אוהב אותו ושזה לא בגללו..."';
+            } else if (editNumber === 2) {
+                storyTitle.textContent = 'הסיפור של אבא דוב וסופת הלב - גרסה סופית 🐻💨🌟';
+                storyContent.textContent = '"...ופתאום נשמע רעש חזק ביער. אבא דוב הרגיש סערה קטנה, אבל הוא חייך לדובון ואמר: \'אני צריך רגע קט להירגע\'. הוא נכנס למערה, נשם עמוק, וחזר מחייך. דובון הבין שאבא שלו תמיד אוהב אותו, גם כשהוא צריך רגע לעצמו..."';
+            }
+        }
+
+        // Toggle story preview visibility
+        function toggleStoryPreview() {
+            const checkbox = document.getElementById('showStoryCheckbox');
+            const storyPreview = document.getElementById('storyPreview');
+            
+            if (checkbox.checked) {
+                storyPreview.classList.remove('hidden');
+            } else {
+                storyPreview.classList.add('hidden');
+            }
         }
 
         // Complete reading and return to screen 1
@@ -932,6 +1247,148 @@
             switchScreen(1);
             // clear state
             document.getElementById('free-text-input').value = "";
+        }
+
+        // Registration screen variables
+        let regUsername = '';
+        let regCode = '';
+        let regSelectedBird = null;
+        let regSelectedBirdName = '';
+        let regSelectedEmoji = '';
+
+        // Bird selection handler for registration
+        function selectRegBird(element, birdId, birdName, emoji) {
+            // Remove selection from all cards
+            document.querySelectorAll('.reg-bird-card').forEach(card => {
+                card.classList.remove('border-indigo-400');
+                card.classList.add('border-transparent');
+            });
+
+            // Add selection to clicked card
+            element.classList.remove('border-transparent');
+            element.classList.add('border-indigo-400');
+
+            // Store selection
+            regSelectedBird = birdId;
+            regSelectedBirdName = birdName;
+            regSelectedEmoji = emoji;
+
+            // Update display
+            updateRegDisplay();
+            checkRegFormValidity();
+        }
+
+        // Initialize registration input handlers
+        function initRegInputs() {
+            const regUsernameInput = document.getElementById('reg-username');
+            const regCodeInput = document.getElementById('reg-code');
+            
+            if (regUsernameInput) {
+                regUsernameInput.addEventListener('input', function(e) {
+                    regUsername = e.target.value.trim();
+                    updateRegDisplay();
+                    checkRegFormValidity();
+                });
+            }
+            
+            if (regCodeInput) {
+                // Only allow numbers
+                regCodeInput.addEventListener('input', function(e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    regCode = this.value;
+                    
+                    // Visual feedback for code length
+                    if (regCode.length === 4) {
+                        this.classList.remove('border-red-300');
+                        this.classList.add('border-green-300');
+                    } else if (regCode.length > 0) {
+                        this.classList.remove('border-green-300');
+                        this.classList.add('border-red-300');
+                    } else {
+                        this.classList.remove('border-red-300', 'border-green-300');
+                    }
+                    
+                    checkRegFormValidity();
+                });
+            }
+        }
+
+        // Update registration display
+        function updateRegDisplay() {
+            const display = document.getElementById('reg-display');
+            const nameSpan = document.getElementById('reg-display-name');
+            const birdSpan = document.getElementById('reg-display-bird');
+            const emojiSpan = document.getElementById('reg-display-emoji');
+
+            if (regUsername && regSelectedBird) {
+                display.classList.remove('hidden');
+                nameSpan.textContent = regUsername;
+                birdSpan.textContent = regSelectedBirdName;
+                emojiSpan.textContent = regSelectedEmoji;
+            } else {
+                display.classList.add('hidden');
+            }
+        }
+
+        // Check if registration form is valid
+        function checkRegFormValidity() {
+            const submitBtn = document.getElementById('reg-submit-btn');
+            const btnText = document.getElementById('reg-btn-text');
+
+            if (regUsername && regCode.length === 4 && regSelectedBird) {
+                submitBtn.disabled = false;
+                btnText.textContent = 'הירשם עכשיו';
+            } else {
+                submitBtn.disabled = true;
+                if (!regUsername) {
+                    btnText.textContent = 'הזן שם משתמש';
+                } else if (regCode.length !== 4) {
+                    btnText.textContent = 'הזן קוד בן 4 ספרות';
+                } else if (!regSelectedBird) {
+                    btnText.textContent = 'בחר ציפור';
+                } else {
+                    btnText.textContent = 'השלם את כל השדות להרשמה';
+                }
+            }
+        }
+
+        // Submit registration
+        function submitRegistration() {
+            if (!regUsername || regCode.length !== 4 || !regSelectedBird) {
+                return;
+            }
+
+            // Save user profile to localStorage
+            const userProfile = {
+                username: regUsername,
+                code: btoa(regCode), // Simple encoding (not real encryption)
+                bird: regSelectedBird,
+                birdName: regSelectedBirdName,
+                emoji: regSelectedEmoji,
+                createdAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+            // Show success message
+            const submitBtn = document.getElementById('reg-submit-btn');
+            submitBtn.innerHTML = `
+                <div class="flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>נרשמת בהצלחה!</span>
+                </div>
+            `;
+
+            // Move to login screen after short delay
+            setTimeout(() => {
+                switchScreen(0);
+                // Reset registration form
+                regUsername = '';
+                regCode = '';
+                regSelectedBird = null;
+                regSelectedBirdName = '';
+                regSelectedEmoji = '';
+            }, 1500);
         }
 
         // Login screen simulator variables
@@ -1025,8 +1482,133 @@
             switchScreen(1);
         }
 
-        // Load user info from login screen and initialize login screen
+        // Parental Gate - Secret Code Verification
+        let gateCodeInput = '';
+
+        // Initialize gate code input handler
+        function initGateCodeInput() {
+            const gateInput = document.getElementById('gate-code');
+            if (gateInput) {
+                gateInput.addEventListener('input', function(e) {
+                    // Only allow numbers
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    gateCodeInput = this.value;
+                    
+                    // Update visual dots
+                    for (let i = 1; i <= 4; i++) {
+                        const dot = document.getElementById(`dot-${i}`);
+                        if (i <= gateCodeInput.length) {
+                            dot.classList.remove('bg-stone-300');
+                            dot.classList.add('bg-amber-500');
+                        } else {
+                            dot.classList.remove('bg-amber-500');
+                            dot.classList.add('bg-stone-300');
+                        }
+                    }
+                    
+                    // Update button state
+                    const verifyBtn = document.getElementById('verify-btn');
+                    const btnText = document.getElementById('verify-btn-text');
+                    const errorMsg = document.getElementById('error-msg');
+                    
+                    if (gateCodeInput.length === 4) {
+                        verifyBtn.disabled = false;
+                        btnText.textContent = 'אמת קוד';
+                        errorMsg.classList.add('hidden');
+                    } else {
+                        verifyBtn.disabled = true;
+                        btnText.textContent = `הזן ${4 - gateCodeInput.length} ספרות נוספות`;
+                    }
+                });
+            }
+        }
+
+        // Verify secret code against stored profile
+        function verifySecretCode() {
+            const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            const storedCode = userProfile.code ? atob(userProfile.code) : '';
+            
+            const errorMsg = document.getElementById('error-msg');
+            const verifyBtn = document.getElementById('verify-btn');
+            const gateInput = document.getElementById('gate-code');
+            
+            if (gateCodeInput === storedCode) {
+                // Success - show success message and proceed
+                verifyBtn.innerHTML = `
+                    <div class="flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>קוד נכון!</span>
+                    </div>
+                `;
+                verifyBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
+                verifyBtn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    switchScreen(4);
+                    // Reset for next time
+                    gateCodeInput = '';
+                    if (gateInput) gateInput.value = '';
+                }, 1000);
+            } else {
+                // Error - show error message
+                errorMsg.classList.remove('hidden');
+                gateInput.classList.add('border-red-300');
+                
+                // Shake animation
+                gateInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    gateInput.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Old verifyAccess function - now redirects to code verification
+        function verifyAccess() {
+            verifySecretCode();
+        }
+
+        // Breathing exercise functions
+        let breathingTimer = null;
+
+        function startBreathing() {
+            const buttons = document.getElementById('breathingButtons');
+            const animation = document.getElementById('breathingAnimation');
+            
+            // Hide buttons and show animation
+            buttons.classList.add('hidden');
+            animation.classList.remove('hidden');
+            
+            // After 9 seconds (3 breathing cycles), automatically proceed to meditation
+            breathingTimer = setTimeout(() => {
+                goToGate();
+            }, 9000);
+        }
+
+        function skipBreathing() {
+            // Skip directly to parental gate (meditation section)
+            goToGate();
+        }
+
+        function resetBreathing() {
+            const buttons = document.getElementById('breathingButtons');
+            const animation = document.getElementById('breathingAnimation');
+            
+            // Clear the timer if it exists
+            if (breathingTimer) {
+                clearTimeout(breathingTimer);
+                breathingTimer = null;
+            }
+            
+            // Hide animation and show buttons again
+            animation.classList.add('hidden');
+            buttons.classList.remove('hidden');
+        }
+
+        // Load user info from login screen and initialize screens
         window.addEventListener('DOMContentLoaded', function() {
+            // Initialize registration screen input handlers
+            initRegInputs();
+            
             // Initialize login screen input handler
             initSimUsernameInput();
             
