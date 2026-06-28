@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zipur Demo - מסכי הדגמה</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .sim-animal-card {
+            transition: all 0.2s ease;
+        }
+        .sim-animal-card:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-height-screen p-6 lg:p-12">
+
+    <!-- Header Section -->
+    <header class="max-w-7xl mx-auto mb-8 text-right">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-6">
+            <div>
+                <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-3 py-1 rounded-full">Demo Version</span>
+                <h1 class="text-3xl lg:text-4xl font-bold text-slate-800 mt-2">Zipur - הדגמת מסכים</h1>
+                <p class="text-slate-600 mt-1">מסכים נבחרים: Onboarding, כניסה, שיתוף, בקרת סיפור, הקראה</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Sidebar Navigation -->
+        <section class="lg:col-span-3 flex flex-col gap-4">
+            <h2 class="text-lg font-bold text-slate-700 mb-1">תפריט מסכים</h2>
+            
+            <button onclick="switchScreen(-2)" id="btn-screen-2" class="screen-nav-btn active flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-teal-500 bg-teal-50 text-teal-900 font-bold shadow-sm">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">-2</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך Onboarding</p>
+                        <p class="text-xs text-slate-500 font-normal">הצגת לוגו ומידע</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-teal-600"></i>
+            </button>
+
+            <button onclick="switchScreen(0)" id="btn-screen0" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">0</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך כניסה</p>
+                        <p class="text-xs text-slate-500 font-normal">הזנת שם ובחירת דמות</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <button onclick="switchScreen(1)" id="btn-screen1" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">1</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך שיתוף וויסות</p>
+                        <p class="text-xs text-slate-500 font-normal">הזנת טריגר / אירוע</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-teal-600"></i>
+            </button>
+
+            <button onclick="switchScreen(4)" id="btn-screen4" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">4</span>
+                    <div>
+                        <p class="text-sm font-bold">בקרת סיפור</p>
+                        <p class="text-xs text-slate-500 font-normal">Coaching והדרכה</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <button onclick="switchScreen(5)" id="btn-screen5" class="screen-nav-btn flex items-center justify-between w-full p-4 rounded-xl text-right transition duration-200 border-2 border-transparent bg-white hover:bg-slate-100 text-slate-700 font-medium">
+                <span class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">5</span>
+                    <div>
+                        <p class="text-sm font-bold">מסך הקראת הסיפור</p>
+                        <p class="text-xs text-slate-500 font-normal">הצגת הסיפור המלא</p>
+                    </div>
+                </span>
+                <i class="fa-solid fa-chevron-left text-slate-400"></i>
+            </button>
+
+            <div class="mt-6 bg-slate-800 text-white p-4 rounded-xl text-sm">
+                <p class="font-bold mb-2 flex items-center gap-2 text-teal-400">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    הדגמה אינטראקטיבית
+                </p>
+                <p class="text-slate-300 text-xs">לחץ על הכפתורים בתפריט כדי לעבור בין המסכים</p>
+            </div>
+        </section>
+
+        <!-- Simulated Mobile Phone Interface -->
+        <section class="lg:col-span-9 flex justify-center items-center">
+            <div class="relative w-[360px] h-[720px] bg-slate-900 rounded-[50px] p-4 shadow-2xl border-4 border-slate-700">
+                <!-- Phone Ear Speaker & Camera Notch -->
+                <div class="absolute top-4 left-1/2 transform -translate-x-1/2 h-5 w-32 bg-slate-900 rounded-b-2xl z-40 flex justify-center items-start">
+                    <div class="w-12 h-1 bg-slate-700 rounded-full mt-1"></div>
+                </div>
+
+                <!-- Phone Internal Screen -->
+                <div class="w-full h-full bg-stone-50 rounded-[38px] overflow-hidden relative flex flex-col pt-6 select-none">
+                    
+                    <!-- Simulated App Top Bar -->
+                    <div class="bg-stone-50 px-4 py-2 flex justify-between items-center text-xs text-slate-500 border-b border-stone-200 z-10">
+                        <div class="flex items-center gap-2">
+                            <img id="top-bar-logo" src="zipur18, 2026, 09_36_37 AM.png" alt="zipur" class="h-6 object-contain hidden">
+                            <div id="user-info" class="hidden flex items-center gap-1 bg-teal-50 px-2 py-1 rounded-full">
+                                <span id="user-emoji" class="text-sm"></span>
+                                <span id="user-name" class="font-bold text-teal-700 text-[10px]"></span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 direction-ltr">
+                            <i class="fa-solid fa-signal text-[10px]"></i>
+                            <i class="fa-solid fa-wifi text-[10px]"></i>
+                            <i class="fa-solid fa-battery-three-quarters text-xs"></i>
+                            <span class="font-bold ml-1">11:05</span>
+                        </div>
+                    </div>
+
+                    <!-- SCREEN CONTAINER -->
+                    <div class="flex-grow overflow-y-auto custom-scrollbar p-5 pb-8 relative" id="mobile-viewport">
+                        
+                        <!-- SIMULATED SCREEN -2: ONBOARDING SCREEN -->
+                        <div id="sim-screen-2" class="sim-screen block">
+                            <div class="flex flex-col items-center justify-center h-full min-h-[500px]">
+                                <div class="mb-8">
+                                    <img src="zipur18, 2026, 09_36_37 AM.png" alt="Zipur Logo" class="w-48 h-auto mx-auto">
+                                </div>
+                                
+                                <div class="text-center mb-8">
+                                    <h1 class="text-2xl font-bold text-slate-800 mb-2">ברוכים הבאים ל-Zipur</h1>
+                                    <p class="text-sm text-slate-600">מערכת לתיווך סיפורים והבנה רגשית</p>
+                                </div>
+                                
+                                <button
+                                    onclick="openZipurModal()"
+                                    class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                >
+                                    <i class="fa-solid fa-play-circle text-lg"></i>
+                                    <span>מהי Zipur?</span>
+                                </button>
+                                
+                                <button
+                                    onclick="switchScreen(0)"
+                                    class="mt-6 inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-medium text-sm px-6 py-3 rounded-xl border-2 border-slate-200 hover:border-slate-300 transition duration-300"
+                                >
+                                    <span>המשך לכניסה</span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Zipur Info Modal -->
+                            <div id="zipurModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                                <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
+                                    <button
+                                        onclick="closeZipurModal()"
+                                        class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 transition duration-200 z-10"
+                                    >
+                                        <i class="fa-solid fa-times text-xl"></i>
+                                    </button>
+                                    
+                                    <div class="p-8 text-right">
+                                        <div class="text-center mb-6">
+                                            <img src="zipur18, 2026, 09_36_37 AM.png" alt="Zipur Logo" class="h-20 w-auto mx-auto mb-4">
+                                            <h2 class="text-3xl font-bold text-slate-800 mb-2">מהי Zipur?</h2>
+                                        </div>
+                                        
+                                        <div class="space-y-4 text-slate-700">
+                                            <p class="text-lg leading-relaxed">
+                                                <strong class="text-teal-600">Zipur</strong> היא אפליקציה ייחודית שנועדה לסייע להורים ליצור קשר רגשי בטוח עם ילדיהם.
+                                            </p>
+                                            
+                                            <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-5 border border-teal-100">
+                                                <h3 class="text-xl font-bold text-teal-800 mb-3 flex items-center gap-2">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                    איך זה עובד?
+                                                </h3>
+                                                <ul class="space-y-3 text-base">
+                                                    <li class="flex items-start gap-3">
+                                                        <i class="fa-solid fa-check-circle text-teal-600 mt-1"></i>
+                                                        <span><strong>שיתוף בטוח:</strong> ההורה משתף אירוע או רגש מאתגר במרחב מוגן</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <i class="fa-solid fa-check-circle text-teal-600 mt-1"></i>
+                                                        <span><strong>תיווך AI:</strong> המערכת יוצרת סיפור מטאפורי מותאם לגיל הילד</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <i class="fa-solid fa-check-circle text-teal-600 mt-1"></i>
+                                                        <span><strong>הקראה משותפת:</strong> ההורה והילד קוראים את הסיפור יחד</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <i class="fa-solid fa-check-circle text-teal-600 mt-1"></i>
+                                                        <span><strong>חיבור רגשי:</strong> יצירת הבנה הדדית וחיזוק הקשר ההורי</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-100">
+                                                <h3 class="text-xl font-bold text-purple-800 mb-3 flex items-center gap-2">
+                                                    <i class="fa-solid fa-shield-heart"></i>
+                                                    למה Zipur?
+                                                </h3>
+                                                <ul class="space-y-2 text-base">
+                                                    <li class="flex items-start gap-3">
+                                                        <span class="text-purple-600">•</span>
+                                                        <span>מפחיתה תחושות אשמה ובושה אצל ההורה</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <span class="text-purple-600">•</span>
+                                                        <span>מאפשרת לילד להבין את ההורה בצורה בטוחה</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <span class="text-purple-600">•</span>
+                                                        <span>מחזקת את תחושת המסוגלות ההורית</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-3">
+                                                        <span class="text-purple-600">•</span>
+                                                        <span>בונה גשר רגשי בין ההורה לילד</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <p class="text-center text-base text-slate-600 italic pt-4">
+                                                "כי כל הורה ראוי לחיבור, וכל ילד ראוי להבנה"
+                                            </p>
+                                        </div>
+                                        
+                                        <div class="mt-6 text-center">
+                                            <button
+                                                onclick="closeZipurModal()"
+                                                class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-sm px-8 py-3 rounded-xl transition duration-300 shadow-lg"
+                                            >
+                                                <span>הבנתי, בואו נתחיל!</span>
+                                                <i class="fa-solid fa-arrow-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SIMULATED SCREEN 0: LOGIN SCREEN -->
+                        <div id="sim-screen0" class="sim-screen hidden">
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-purple-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
+                            <div class="text-center mb-6">
+                                <div class="inline-block bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl p-4 shadow-lg mb-3">
+                                    <img src="zipur18, 2026, 09_36_37 AM.png" alt="zipur Logo" class="h-16 w-auto mx-auto">
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-800">שלום</h2>
+                                <p class="text-[10px] text-slate-500 mt-1">התחל במסע של חיבור והבנה</p>
+                            </div>
+
+                            <div class="mb-4 text-right">
+                                <label class="block text-slate-700 font-bold text-xs mb-2">
+                                    <i class="fa-solid fa-user text-purple-600 ml-1"></i>
+                                    שם פרטי או כינוי
+                                </label>
+                                <input
+                                    type="text"
+                                    id="sim-username"
+                                    placeholder="לדוגמה: אבא דוב..."
+                                    class="w-full px-3 py-2 text-xs border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none text-right"
+                                    maxlength="20"
+                                >
+                            </div>
+
+                            <div class="mb-4 text-right">
+                                <label class="block text-slate-700 font-bold text-xs mb-2">
+                                    <i class="fa-solid fa-paw text-purple-600 ml-1"></i>
+                                    בחר דמות לסיפור
+                                </label>
+                                
+                                <div class="grid grid-cols-5 gap-2">
+                                    <div class="sim-animal-card bg-gradient-to-br from-amber-50 to-yellow-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-amber-300 transition"
+                                         onclick="selectSimAnimal(this, 'bear', 'דוב', '🐻')">
+                                        <span class="text-2xl block">🐻</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">דוב</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-pink-50 to-rose-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-pink-300 transition"
+                                         onclick="selectSimAnimal(this, 'rabbit', 'ארנבת', '🐰')">
+                                        <span class="text-2xl block">🐰</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">ארנבת</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-orange-50 to-amber-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-orange-300 transition"
+                                         onclick="selectSimAnimal(this, 'lion', 'אריה', '🦁')">
+                                        <span class="text-2xl block">🦁</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">אריה</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-red-50 to-orange-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-red-300 transition"
+                                         onclick="selectSimAnimal(this, 'fox', 'שועל', '🦊')">
+                                        <span class="text-2xl block">🦊</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">שועל</p>
+                                    </div>
+
+                                    <div class="sim-animal-card bg-gradient-to-br from-slate-50 to-gray-100 rounded-xl p-2 text-center border-2 border-transparent cursor-pointer hover:border-slate-300 transition"
+                                         onclick="selectSimAnimal(this, 'owl', 'ינשוף', '🦉')">
+                                        <span class="text-2xl block">🦉</span>
+                                        <p class="text-[9px] font-bold text-slate-700 mt-1">ינשוף</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="sim-selection-display" class="hidden mb-4 p-2 bg-purple-50 border border-purple-200 rounded-xl text-right">
+                                <p class="text-[10px] text-purple-800">
+                                    <i class="fa-solid fa-check-circle text-purple-600 ml-1"></i>
+                                    <strong id="sim-selected-name"></strong> בחר/ה ב<strong id="sim-selected-animal"></strong>
+                                    <span id="sim-selected-emoji" class="text-lg mr-1"></span>
+                                </p>
+                            </div>
+
+                            <button
+                                id="sim-enter-btn"
+                                onclick="enterSimApp()"
+                                disabled
+                                class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed text-white font-bold text-xs py-3 rounded-xl transition duration-300 shadow-sm"
+                            >
+                                <span id="sim-btn-text">בחר שם ודמות כדי להתחיל</span>
+                            </button>
+
+                            <div class="mt-4 p-2 bg-slate-50 rounded-lg text-right">
+                                <p class="text-[9px] text-slate-600 leading-relaxed">
+                                    <i class="fa-solid fa-shield-halved text-slate-500 ml-1"></i>
+                                    <strong>פרטיות מלאה:</strong> המידע שלך מוצפן ומאובטח.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- SIMULATED SCREEN 1: DECOMPRESS / INTAKE -->
+                        <div id="sim-screen1" class="sim-screen hidden">
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
+                            <div class="text-right">
+                                <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md">צעד 1 מתוך 3</span>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2">במה תרצה/י לשתף?</h3>
+                                <p class="text-slate-500 text-xs mt-1">כאן המקום לשתף באירועי היום באופן חופשי ומאובטח. אנחנו כאן ללא שיפוטיות.</p>
+                            </div>
+
+                            <div class="mt-5 text-right">
+                                <label class="text-xs font-bold text-slate-500 block mb-2">בחירה מהירה (Fast Tags):</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-volume-high text-amber-500"></i>
+                                        צעקתי או איבדתי סבלנות
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-cloud-bolt text-blue-500"></i>
+                                        נבהלתי מרעש פתאומי
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-door-closed text-slate-500"></i>
+                                        הסתגרתי בחדר לפרק זמן ארוך
+                                    </button>
+                                    <button onclick="toggleTag(this)" class="tag-pill text-xs px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-full text-slate-700 transition duration-150 flex items-center gap-1">
+                                        <i class="fa-solid fa-eye text-red-500"></i>
+                                        הייתי דרוך ומתוח מאוד
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-teal-50/50 border border-teal-100 rounded-2xl text-center flex flex-col items-center">
+                                <p class="text-xs font-bold text-slate-600 mb-3">או לשתף בהקלטה קולית ללא מאמץ:</p>
+                                
+                                <button id="record-btn" onclick="toggleRecording()" class="w-16 h-16 rounded-full bg-teal-600 hover:bg-teal-700 text-white flex items-center justify-center shadow-lg hover:shadow-teal-100 transition duration-300 relative">
+                                    <i class="fa-solid fa-microphone text-xl" id="mic-icon"></i>
+                                    <span id="pulse-ring" class="absolute inset-0 rounded-full bg-teal-600 opacity-30 animate-ping hidden"></span>
+                                </button>
+                                
+                                <p class="text-[11px] text-slate-500 mt-2.5" id="record-status">לחץ כדי להתחיל להקליט חופשי</p>
+                            </div>
+
+                            <div class="mt-4 text-right">
+                                <label class="text-xs font-bold text-slate-500 block mb-1">הוספת פרטים בטקסט (אופציונלי):</label>
+                                <textarea id="free-text-input" placeholder="לדוגמה: כשהתפוצץ הבלון בגינה צעקתי על הילד, הוא נבהל..." class="w-full text-xs p-3 border border-stone-200 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none bg-white text-slate-800 text-right h-16 resize-none"></textarea>
+                            </div>
+
+                            <button onclick="submitIntake()" class="mt-5 w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-bold text-sm transition duration-150 flex items-center justify-center gap-2 shadow-sm">
+                                שלח וקבל תיקוף והכנה לסיפור
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
+                            </button>
+                        </div>
+                        <!-- SIMULATED SCREEN 4: STORY REVIEW & PARENT COACHING -->
+                        <div id="sim-screen4" class="sim-screen hidden">
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
+                            <div class="text-right">
+                                <span class="text-xs font-semibold text-slate-600 bg-stone-100 px-2.5 py-1 rounded-md">צעד 3 מתוך 3</span>
+                                <h3 class="text-xl font-bold text-slate-800 mt-2">מסך הקראה והדרכה</h3>
+                                <p class="text-slate-500 text-xs mt-1">הסיפור מוכן לאישורך. זה המקום להציע שינויים והתאמות לפני ההקראה</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="flex items-center gap-2 cursor-pointer text-right">
+                                    <input type="checkbox" id="showStoryCheckbox" onchange="toggleStoryPreview()" class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 focus:ring-2">
+                                    <span class="text-sm font-medium text-slate-700">הצג סיפור</span>
+                                </label>
+                            </div>
+
+                            <div id="storyPreview" class="mt-3 border-2 border-dashed border-teal-300 rounded-lg p-3 bg-white hidden">
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-teal-600 block mb-2">תצוגת הסיפור:</span>
+                                <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-100 text-right max-h-[150px] overflow-y-auto custom-scrollbar">
+                                    <p class="text-xs font-bold text-slate-800 mb-2">הסיפור של אבא דוב וסופת הלב 🐻💨</p>
+                                    <p class="text-[11px] leading-relaxed text-slate-600">
+                                        "...ופתאום נשמע רעש חזק ביער. אבא דוב הרגיש סערה קטנה ועמוסה נכנסת לו אל תוך הלב. הוא היה צריך קצת שקט, אז הוא נכנס למערה שלו כדי להירגע ולשמור על כולם. דובון קטן ידע שזה לא בגללו..."
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-3 gap-2">
+                                <button onclick="alert('נשלחה בקשה ל-AI לרכך את הסיפור ולהתאים אותו מחדש!')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                                    <span>ריכוך טון</span>
+                                </button>
+                                <button onclick="toggleEditPrompt()" class="bg-amber-100 hover:bg-amber-200 border border-amber-200 text-amber-700 font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-pen-to-square text-[10px]"></i>
+                                    <span>ערוך מחדש</span>
+                                </button>
+                                <button onclick="finishStorySession()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-[10px] py-2 rounded-lg transition duration-150 flex items-center justify-center gap-1 shadow-sm">
+                                    <span>אשר והקרא</span>
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <div id="editPrompt" class="mt-4 text-right hidden">
+                                <label class="text-xs font-bold text-slate-500 block mb-1">מה תרצה לשנות?</label>
+                                <textarea id="edit-text-input" placeholder="לדוגמה: כשהתפוצץ הבלון בגינה צעקתי על הילד, הוא נבהל..." class="w-full text-xs p-3 border border-stone-200 rounded-xl focus:ring-1 focus:ring-teal-500 focus:outline-none bg-white text-slate-800 text-right h-16 resize-none"></textarea>
+                                <button onclick="submitEdit()" class="mt-2 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs py-2 rounded-lg transition duration-150">
+                                    שלח לעריכה
+                                </button>
+                                <button onclick="switchScreen(0)" class="mt-2 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs py-2 rounded-lg transition duration-150">
+                                    חזור לעדכון פרופיל והרשמה
+                                </button>
+                            </div>
+                        </div>
+                        <!-- SIMULATED SCREEN 5: STORY READING MODE -->
+                        <div id="sim-screen5" class="sim-screen hidden">
+                            <button onclick="goBack()" class="absolute top-2 left-4 flex items-center gap-1.5 text-slate-600 hover:text-teal-600 transition duration-200 text-xs font-medium z-20">
+                                <i class="fa-solid fa-chevron-right"></i>
+                                <span>חזור</span>
+                            </button>
+                            
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-3xl mb-3">
+                                    🐻
+                                </div>
+                                <h3 class="text-2xl font-bold text-slate-800">הסיפור של אבא דוב</h3>
+                                <p class="text-slate-500 text-xs mt-1">הסיפור מוכן להקראה</p>
+                            </div>
+
+                            <div class="mt-5 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-5 text-right max-h-[400px] overflow-y-auto custom-scrollbar">
+                                <div class="space-y-4 text-sm leading-relaxed text-slate-800">
+                                    <p class="font-bold text-amber-800 text-base mb-3">🌲 פעם, ביער הגדול...</p>
+                                    
+                                    <p>
+                                        גר אבא דוב חזק ואוהב עם דובון קטן שלו. אבא דוב תמיד דאג לדובון - הביא לו אוכל, שיחק איתו, וסיפר לו סיפורים לפני השינה.
+                                    </p>
+                                    
+                                    <p class="bg-white/60 p-3 rounded-lg border border-amber-200">
+                                        <strong>💨 יום אחד...</strong><br/>
+                                        בזמן ששיחקו ביער, נשמע רעש חזק מאוד - בום! זה היה רק בלון שהתפוצץ, אבל אבא דוב הרגיש משהו מוזר בתוך הלב שלו.
+                                    </p>
+                                    
+                                    <p>
+                                        פתאום, סערה קטנה ועמוסה נכנסה לו אל תוך הלב. זו לא הייתה סערה רגילה - זו הייתה סערה מיוחדת שרק דובים מסוימים מכירים, סערה שבאה מזמנים קשים שעברו עליהם.
+                                    </p>
+                                    
+                                    <p class="bg-teal-50/80 p-3 rounded-lg border border-teal-200">
+                                        <strong>🏠 אבא דוב היה צריך...</strong><br/>
+                                        קצת שקט כדי שהסערה תעבור. אז הוא נכנס למערה שלו לרגע, לא כי הוא כועס על דובון, אלא כי הוא רצה לשמור על כולם ולהרגיש טוב יותר.
+                                    </p>
+                                    
+                                    <p>
+                                        דובון קטן ראה את אבא נכנס למערה והרגיש קצת מבולבל. "אולי אבא כועס עליי?" חשב דובון. אבל זה לא היה נכון בכלל!
+                                    </p>
+                                    
+                                    <p class="bg-emerald-50/80 p-3 rounded-lg border border-emerald-200">
+                                        <strong>❤️ כשאבא דוב יצא מהמערה...</strong><br/>
+                                        הוא התיישב ליד דובון והסביר לו: "דובון שלי, הסערה שהייתה בלב שלי היא לא בגללך. זה משהו שקורה לי לפעמים בגלל דברים שקרו לי מזמן. אני אוהב אותך מאוד מאוד, ותמיד אהיה כאן בשבילך."
+                                    </p>
+                                    
+                                    <p>
+                                        דובון הבין שאבא שלו אוהב אותו, וששניהם יכולים לדבר על רגשות קשים. מאז, כל פעם שהסערה חוזרת, דובון יודע שזה לא בגללו, ושאבא דוב עושה את המיטב שלו.
+                                    </p>
+                                    
+                                    <p class="text-center font-bold text-amber-700 text-base mt-4">
+                                        🌟 הסוף 🌟
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-2 gap-3">
+                                <button onclick="alert('הסיפור יוקרא שוב מההתחלה')" class="bg-stone-100 hover:bg-stone-200 border border-stone-200 text-slate-700 font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                    קרא שוב
+                                </button>
+                                <button onclick="completeReading()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 rounded-xl transition duration-150 flex items-center justify-center gap-1 shadow-sm">
+                                    <i class="fa-solid fa-heart"></i>
+                                    סיימנו - תודה!
+                                </button>
+                            </div>
+                            <!-- Mentalization Prompt for Parent -->
+                            <div class="mt-4 p-3 bg-teal-50 border border-teal-200 rounded-xl text-right">
+                                <p class="text-xs text-teal-800">
+                                    <strong>💡 טיפ להורה:</strong> לאחר הסיפור, שאל את הילד: "מה דובון הרגיש כשאבא נכנס למערה? ומה אתה הרגשת?"
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Track current screen
+        let currentScreen = -2;
+
+        // Login screen variables
+        let simUsername = '';
+        let simSelectedAnimal = null;
+        let simSelectedAnimalName = '';
+        let simSelectedEmoji = '';
+
+        // Screen switching controller
+        function switchScreen(screenNum) {
+            currentScreen = screenNum;
+            
+            // Update Navigation Buttons
+            document.querySelectorAll('.screen-nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-teal-500', 'bg-teal-50', 'text-teal-900', 'font-bold', 'shadow-sm');
+                btn.classList.add('border-transparent', 'bg-white', 'text-slate-700', 'font-medium');
+                const icon = btn.querySelector('i');
+                icon.className = 'fa-solid fa-chevron-left text-slate-400';
+                const badge = btn.querySelector('.w-8');
+                badge.className = 'w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm';
+            });
+
+            const actualBtn = document.getElementById(`btn-screen${screenNum}`);
+            if (actualBtn) {
+                actualBtn.classList.remove('border-transparent', 'bg-white', 'text-slate-700', 'font-medium');
+                actualBtn.classList.add('active', 'border-teal-500', 'bg-teal-50', 'text-teal-900', 'font-bold', 'shadow-sm');
+                
+                const activeIcon = actualBtn.querySelector('i');
+                activeIcon.className = 'fa-solid fa-chevron-left text-teal-600';
+                
+                const activeBadge = actualBtn.querySelector('.w-8');
+                activeBadge.className = 'w-8 h-8 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm';
+            }
+
+            // Switch Simulated Phone Views
+            document.querySelectorAll('.sim-screen').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById(`sim-screen${screenNum}`).classList.remove('hidden');
+
+            // Handle top bar logo visibility
+            const topBarLogo = document.getElementById('top-bar-logo');
+            if (screenNum === -2 || screenNum === 0) {
+                topBarLogo.classList.add('hidden');
+            } else {
+                topBarLogo.classList.remove('hidden');
+            }
+        }
+
+        // Back navigation
+        function goBack() {
+            if (currentScreen === 0) {
+                switchScreen(-2);
+            } else if (currentScreen === 1) {
+                switchScreen(0);
+            } else if (currentScreen === 4) {
+                switchScreen(1);
+            } else if (currentScreen === 5) {
+                switchScreen(4);
+            }
+        }
+
+        // Zipur Modal Functions
+        function openZipurModal() {
+            const modal = document.getElementById('zipurModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeZipurModal() {
+            const modal = document.getElementById('zipurModal');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Animal selection handler
+        function selectSimAnimal(element, animalId, animalName, emoji) {
+            document.querySelectorAll('.sim-animal-card').forEach(card => {
+                card.classList.remove('border-emerald-400');
+                card.classList.add('border-transparent');
+            });
+
+            element.classList.remove('border-transparent');
+            element.classList.add('border-emerald-400');
+
+            simSelectedAnimal = animalId;
+            simSelectedAnimalName = animalName;
+            simSelectedEmoji = emoji;
+
+            updateSimSelectionDisplay();
+            checkSimFormValidity();
+        }
+
+        // Username input handler
+        function initSimUsernameInput() {
+            const simUsernameInput = document.getElementById('sim-username');
+            if (simUsernameInput) {
+                simUsernameInput.addEventListener('input', function(e) {
+                    simUsername = e.target.value.trim();
+                    updateSimSelectionDisplay();
+                    checkSimFormValidity();
+                });
+            }
+        }
+
+        // Update selection display
+        function updateSimSelectionDisplay() {
+            const display = document.getElementById('sim-selection-display');
+            const nameSpan = document.getElementById('sim-selected-name');
+            const animalSpan = document.getElementById('sim-selected-animal');
+            const emojiSpan = document.getElementById('sim-selected-emoji');
+
+            if (simUsername && simSelectedAnimal) {
+                display.classList.remove('hidden');
+                nameSpan.textContent = simUsername;
+                animalSpan.textContent = simSelectedAnimalName;
+                emojiSpan.textContent = simSelectedEmoji;
+            } else {
+                display.classList.add('hidden');
+            }
+        }
+
+        // Check form validity
+        function checkSimFormValidity() {
+            const enterBtn = document.getElementById('sim-enter-btn');
+            const btnText = document.getElementById('sim-btn-text');
+
+            if (simUsername && simSelectedAnimal) {
+                enterBtn.disabled = false;
+                btnText.textContent = 'התחל את המסע שלך';
+            } else {
+                enterBtn.disabled = true;
+                btnText.textContent = 'בחר שם ודמות כדי להתחיל';
+            }
+        }
+
+        // Enter app handler
+        function enterSimApp() {
+            if (!simUsername || !simSelectedAnimal) {
+                return;
+            }
+
+            const userInfo = document.getElementById('user-info');
+            const userName = document.getElementById('user-name');
+            const userEmoji = document.getElementById('user-emoji');
+            
+            userName.textContent = simUsername;
+            userEmoji.textContent = simSelectedEmoji;
+            userInfo.classList.remove('hidden');
+            userInfo.classList.add('flex');
+
+            switchScreen(1);
+        }
+
+        // Voice Recording simulator
+        let recordingState = false;
+        function toggleRecording() {
+            recordingState = !recordingState;
+            const status = document.getElementById('record-status');
+            const ring = document.getElementById('pulse-ring');
+            const mic = document.getElementById('mic-icon');
+            const btn = document.getElementById('record-btn');
+
+            if(recordingState) {
+                status.innerText = "מקליט כעת... לחץ שוב לסיום ההקלטה";
+                status.className = "text-[11px] text-red-500 font-bold animate-pulse mt-2.5";
+                ring.classList.remove('hidden');
+                mic.className = "fa-solid fa-stop text-xl";
+                btn.classList.add('bg-red-600');
+                btn.classList.remove('bg-teal-600');
+            } else {
+                status.innerText = "ההקלטה הושלמה והומרה לטקסט!";
+                status.className = "text-[11px] text-emerald-600 font-bold mt-2.5";
+                ring.classList.add('hidden');
+                mic.className = "fa-solid fa-microphone text-xl";
+                btn.classList.add('bg-teal-600');
+                btn.classList.remove('bg-red-600');
+                document.getElementById('free-text-input').value = "אבא שוב כעס וצעק בצהריים מול כולם, דובון קטן נבהל מאוד והלך להסתתר";
+            }
+        }
+
+        // Tag selection toggle
+        function toggleTag(btn) {
+            btn.classList.toggle('bg-stone-100');
+            btn.classList.toggle('border-stone-200');
+            btn.classList.toggle('bg-teal-50');
+            btn.classList.toggle('border-teal-300');
+            btn.classList.toggle('text-teal-900');
+            btn.classList.toggle('font-semibold');
+        }
+
+        // Intake completion
+        function submitIntake() {
+            switchScreen(4);
+        }
+
+        // Toggle story preview
+        function toggleStoryPreview() {
+            const checkbox = document.getElementById('showStoryCheckbox');
+            const storyPreview = document.getElementById('storyPreview');
+            
+            if (checkbox.checked) {
+                storyPreview.classList.remove('hidden');
+            } else {
+                storyPreview.classList.add('hidden');
+            }
+        }
+
+        // Toggle edit prompt
+        function toggleEditPrompt() {
+            const editPrompt = document.getElementById('editPrompt');
+            editPrompt.classList.toggle('hidden');
+        }
+
+        // Submit edit
+        function submitEdit() {
+            const editText = document.getElementById('edit-text-input').value;
+            
+            if (!editText.trim()) {
+                alert('אנא הוסף פרטים לעריכה');
+                return;
+            }
+            
+            alert('נשלחה בקשה לעריכת הסיפור עם הפרטים שהוספת!');
+            document.getElementById('edit-text-input').value = '';
+            document.getElementById('editPrompt').classList.add('hidden');
+        }
+
+        // Finish story session
+        function finishStorySession() {
+            switchScreen(5);
+        }
+
+        // Complete reading
+        function completeReading() {
+            alert('הקראת הסיפור הסתיימה בהצלחה! תחושת המסוגלות ההורית עלתה 🐻❤️');
+            switchScreen(1);
+            document.getElementById('free-text-input').value = "";
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', function() {
+            initSimUsernameInput();
+        });
+    </script>
+
+</body>
+</html>
